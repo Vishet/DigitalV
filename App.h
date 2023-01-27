@@ -3,6 +3,7 @@
 #include "MainWindow.h"
 #include "Keyboard.h"
 #include "Mouse.h"
+#include "Graphics.h"
 #include <optional>
 
 class App
@@ -11,6 +12,7 @@ private:
 	Keyboard keyboard{};
 	Mouse mouse{};
 	MainWindow mainWindow{ &keyboard, &mouse };
+	Graphics graphics;
 
 public:
 	App(const App&) = delete;

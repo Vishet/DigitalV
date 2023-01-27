@@ -6,6 +6,9 @@
 
 #define VK_S 0x53
 #define VK_W 0x57
+#define VK_R 0x52
+#define VK_G 0x47
+#define VK_B 0x42
 
 class Keyboard
 {

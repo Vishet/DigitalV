@@ -3,6 +3,8 @@
 App::App()
 {
 	mainWindow.Initialize();
+	graphics.Initialize(mainWindow.GetWindowHandle());
+
 	mainWindow.Show();
 }
 
@@ -50,6 +52,7 @@ void App::Update()
 			{
 				MessageBox(NULL, "You've pressed the key 'S'.", "Keyboard Event", MB_OK);
 			}
+			break;
 		}
 	}
 
@@ -62,11 +65,13 @@ void App::Update()
 			{
 				MessageBox(NULL, "You've Clicked with the W key pressed.", "Mouse Event", MB_OK);
 			}
+			break;
 		}
 	}
 }
 
 void App::Render() const
 {
-
+	graphics.BeginDraw(0.0f, 0.0f, 0.0f);
+	graphics.EndDraw();
 }
