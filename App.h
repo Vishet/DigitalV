@@ -4,6 +4,7 @@
 #include "Keyboard.h"
 #include "Mouse.h"
 #include "Graphics.h"
+#include "SceneManager.h"
 #include <optional>
 
 class App
@@ -12,7 +13,8 @@ private:
 	Keyboard keyboard{};
 	Mouse mouse{};
 	MainWindow mainWindow{ &keyboard, &mouse };
-	Graphics graphics;
+	Graphics* graphics{ Graphics::GetGraphicsPointer() };
+	SceneManager sceneManager{};
 
 public:
 	App(const App&) = delete;

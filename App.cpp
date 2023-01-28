@@ -1,11 +1,15 @@
 #include "App.h"
 
+#include "SimulationScene.h"
+
 App::App()
 {
 	mainWindow.Initialize();
-	graphics.Initialize(mainWindow.GetWindowHandle());
+	graphics->Initialize(mainWindow.GetWindowHandle());
 
 	mainWindow.Show();
+
+	sceneManager.LoadScene(new SimulationScene());
 }
 
 App::~App()
@@ -68,10 +72,11 @@ void App::Update()
 			break;
 		}
 	}
+
+	sceneManager.UpdateScene();
 }
 
 void App::Render() const
 {
-	graphics.BeginDraw(0.0f, 0.0f, 0.0f);
-	graphics.EndDraw();
+	sceneManager.RenderScene();
 }

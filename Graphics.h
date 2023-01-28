@@ -14,6 +14,9 @@
 class Graphics
 {
 private:
+	static Graphics* const graphics;
+	static bool isInitialized;
+
 	Graphics(const Graphics&) = delete;
 	Graphics& operator=(const Graphics&) = delete;
 
@@ -26,9 +29,12 @@ private:
 	static constexpr float realFontSize{ 22.0f };
 	IDWriteTextFormat* pTextFormat{};
 
+	Graphics() = default;
+
 public:
-	Graphics() noexcept;
 	~Graphics() noexcept;
+
+	static Graphics* GetGraphicsPointer() noexcept;
 
 	static void InitializeCOM();
 	static void UnitializeCOM() noexcept;
@@ -42,7 +48,10 @@ public:
 	void Fill(float r, float g, float b, float a) const noexcept;
 
 	void DrawLine(const D2D1_POINT_2F& pointA, const D2D1_POINT_2F& pointB, const D2D1_COLOR_F& color, float strokeWidth) const;
-	void FillRectangle(const D2D1_RECT_F& rect, const D2D1_COLOR_F& color) const;
+	void FillRectangle(
+		float x, float y, float x2, float y2,
+		float r, float g, float b, float a = 1.0f
+	) const;
 	void DrawWString(const std::wstring& text, const D2D1_COLOR_F& textColor, const D2D1_RECT_F& layoutRect) const;
 	void DrawWString(const std::wstring& text, const D2D1_COLOR_F& textColor, int x, int y);
 	void FillCircle(const D2D1_POINT_2F& centerPoint, const float radius, const D2D1_COLOR_F& bgColor) const;

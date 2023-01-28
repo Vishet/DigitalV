@@ -1,10 +1,8 @@
 #include "Graphics.h"
 #include "Exception.h"
 
-Graphics::Graphics() noexcept
-{
-
-}
+Graphics* const Graphics::graphics{ new Graphics() };
+bool Graphics::isInitialized{ false };
 
 Graphics::~Graphics() noexcept
 {
@@ -12,6 +10,11 @@ Graphics::~Graphics() noexcept
 	pFactory->Release();
 	pTextFormat->Release();
 	pWriteFactory->Release();
+}
+
+Graphics* Graphics::GetGraphicsPointer() noexcept
+{
+	return graphics;
 }
 
 void Graphics::InitializeCOM()
@@ -27,6 +30,9 @@ void Graphics::UnitializeCOM() noexcept
 
 void Graphics::Initialize(HWND hWindow)
 {
+	if (isInitialized)
+		return;
+
 	HRESULT hr{};
 
 	THROW_IF_FAILED_HR(D2D1CreateFactory(D2D1_FACTORY_TYPE_SINGLE_THREADED, &pFactory));
@@ -52,6 +58,8 @@ void Graphics::Initialize(HWND hWindow)
 		L"",
 		&pTextFormat
 	));
+
+	isInitialized = true;
 }
 
 void Graphics::BeginDraw() const noexcept
@@ -86,14 +94,23 @@ void Graphics::DrawLine(const D2D1_POINT_2F& pointA, const D2D1_POINT_2F& pointB
 	pRenderTarget->DrawLine(pointA, pointB, pBrush, strokeWidth);
 }
 
-void Graphics::FillRectangle(const D2D1_RECT_F& rect, const D2D1_COLOR_F& color) const
+void Graphics::FillRectangle(
+	float x, float y, float x2, float y2,
+	float r, float g, float b, float a
+) const
 {
 	CComPtr<ID2D1SolidColorBrush> pBrush{};
 
 	HRESULT hr{};
-	THROW_IF_FAILED_HR(pRenderTarget->CreateSolidColorBrush(color, &pBrush));
+	THROW_IF_FAILED_HR(pRenderTarget->CreateSolidColorBrush(
+		D2D1::ColorF(r, g, b, a),
+		&pBrush
+	));
 
-	pRenderTarget->FillRectangle(rect, pBrush);
+	pRenderTarget->FillRectangle(
+		D2D1::RectF(x, y, x2, y2),
+		pBrush
+	);
 }
 
 void Graphics::DrawWString(const std::wstring& text, const D2D1_COLOR_F& textColor, const D2D1_RECT_F& layoutRect) const
