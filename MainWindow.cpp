@@ -1,7 +1,7 @@
 #include "MainWindow.h"
 
 MainWindow::MainWindow(Keyboard* keyboard, Mouse* mouse) noexcept :
-	GenericWindow("DigitalV", 800, 600, false, WS_OVERLAPPED | WS_SYSMENU, keyboard, mouse)
+	GenericWindow("DigitalV", 1280, 720, false, WS_OVERLAPPED | WS_SYSMENU, keyboard, mouse)
 {
 }
 

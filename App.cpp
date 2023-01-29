@@ -47,8 +47,10 @@ std::optional<int> App::ProcessMessages() noexcept
 
 void App::Update()
 {
-	while (auto keyEvent{ keyboard.ReadKey() })
+	while (auto keyEvent{ keyboard->ReadKey() })
 	{
+		sceneManager.KeyInput(*keyEvent);
+
 		switch (keyEvent->GetCode())
 		{
 		case VK_S:
@@ -60,12 +62,14 @@ void App::Update()
 		}
 	}
 
-	while (auto mouseEvent{ mouse.ReadEvent() })
+	while (auto mouseEvent{ mouse->ReadEvent() })
 	{
+		sceneManager.MouseInput(*mouseEvent);
+
 		switch (mouseEvent->GetType())
 		{
 		case Mouse::Event::Type::LMBReleased:
-			if (keyboard.IsKeyDown(VK_W)) 
+			if (keyboard->IsKeyDown(VK_W)) 
 			{
 				MessageBox(NULL, "You've Clicked with the W key pressed.", "Mouse Event", MB_OK);
 			}

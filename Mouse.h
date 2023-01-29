@@ -48,6 +48,9 @@ public:
 	};
 
 private:
+	static Mouse* const mouse;
+	static bool isInitialized;
+
 	std::queue<Event> eventQueue{};
 	int x{ 0 };
 	int y{ 0 };
@@ -89,4 +92,6 @@ public:
 	void OnLeave() noexcept;
 
 	static void TrimQueue(std::queue<Event>& queue) noexcept;
+
+	static Mouse* GetMousePointer() noexcept;
 };

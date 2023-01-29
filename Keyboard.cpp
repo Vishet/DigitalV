@@ -2,6 +2,9 @@
 
 #include "Keyboard.h"
 
+Keyboard* const Keyboard::keyboard{ new Keyboard() };
+bool Keyboard::isInitialized{ false };
+
 Keyboard::Event::Event(unsigned char code, bool pressed) noexcept :
 	code{ code },
 	state{ pressed }
@@ -79,6 +82,11 @@ void Keyboard::OnChar(char character) noexcept
 {
 	charQueue.push(character);
 	TrimQueue(charQueue);
+}
+
+Keyboard* Keyboard::GetKeyboardPointer() noexcept
+{
+	return keyboard;
 }
 
 template<typename T>

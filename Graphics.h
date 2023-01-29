@@ -52,7 +52,11 @@ public:
 		float x, float y, float x2, float y2,
 		float r, float g, float b, float a = 1.0f
 	) const;
-	void DrawWString(const std::wstring& text, const D2D1_COLOR_F& textColor, const D2D1_RECT_F& layoutRect) const;
+	void DrawCenteredText(
+		const std::wstring& text, 
+		float x, float y, float x1, float x2,
+		float r, float g, float b, float a = 1.0f
+	) const;
 	void DrawWString(const std::wstring& text, const D2D1_COLOR_F& textColor, int x, int y);
 	void FillCircle(const D2D1_POINT_2F& centerPoint, const float radius, const D2D1_COLOR_F& bgColor) const;
 };

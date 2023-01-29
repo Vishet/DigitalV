@@ -2,6 +2,9 @@
 
 #include <windows.h>
 
+Mouse* const Mouse::mouse{ new Mouse() };
+bool Mouse::isInitialized{ false };
+
 Mouse::Event::Event(Type type, const Mouse& parent) noexcept :
 	type{ type },
 	x{ parent.x },
@@ -200,4 +203,9 @@ void Mouse::TrimQueue(std::queue<Event>& queue) noexcept
 	{
 		queue.pop();
 	}
+}
+
+Mouse* Mouse::GetMousePointer() noexcept
+{
+	return mouse;
 }

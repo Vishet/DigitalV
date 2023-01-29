@@ -113,26 +113,43 @@ void Graphics::FillRectangle(
 	);
 }
 
-void Graphics::DrawWString(const std::wstring& text, const D2D1_COLOR_F& textColor, const D2D1_RECT_F& layoutRect) const
+void Graphics::DrawCenteredText(
+	const std::wstring& text,
+	float x, float y, float x2, float y2,
+	float r, float g, float b, float a
+) const
 {
 	CComPtr<ID2D1SolidColorBrush> pBrush{};
 
 	HRESULT hr{};
-	THROW_IF_FAILED_HR(pRenderTarget->CreateSolidColorBrush(textColor, &pBrush));
+	THROW_IF_FAILED_HR(pRenderTarget->CreateSolidColorBrush(
+		D2D1::ColorF(r, g, b, a),
+		&pBrush
+	));
+
 	THROW_IF_FAILED_HR(pTextFormat->SetTextAlignment(DWRITE_TEXT_ALIGNMENT_CENTER));
 
-	pRenderTarget->DrawText(
+	IDWriteTextLayout* textLayout{};
+	THROW_IF_FAILED_HR(pWriteFactory->CreateTextLayout(
 		text.c_str(),
-		static_cast<UINT32>(text.size()),
+		static_cast<UINT32>(text.length()),
 		pTextFormat,
-		D2D1::RectF(
-			layoutRect.left,
-			layoutRect.top + (layoutRect.bottom - layoutRect.top - realFontSize) / 2 - (fontSize - realFontSize),
-			layoutRect.right, layoutRect.bottom
-		),
+		x2 - x,
+		y2 - y,
+		&textLayout
+	));
+
+	DWRITE_TEXT_METRICS layoutMetrics{};
+	textLayout->GetMetrics(&layoutMetrics);
+	float textHeight{ layoutMetrics.height };
+
+	pRenderTarget->DrawTextLayout(
+		D2D1::Point2F(x, (y2 + y - textHeight) / 2),
+		textLayout,
 		pBrush,
 		D2D1_DRAW_TEXT_OPTIONS_CLIP
 	);
+
 	THROW_IF_FAILED_HR(pTextFormat->SetTextAlignment(DWRITE_TEXT_ALIGNMENT_LEADING));
 }
 

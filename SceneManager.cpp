@@ -12,6 +12,16 @@ void SceneManager::LoadScene(Scene* scene) noexcept
 	currentScene->Load();
 }
 
+void SceneManager::KeyInput(const Keyboard::Event& keyEvent) noexcept
+{
+	currentScene->KeyInput(keyEvent);
+}
+
+void SceneManager::MouseInput(const Mouse::Event& mouseEvent) noexcept
+{
+	currentScene->MouseInput(mouseEvent);
+}
+
 void SceneManager::UpdateScene() noexcept
 {
 	currentScene->Update();

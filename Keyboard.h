@@ -29,6 +29,9 @@ public:
 	};
 
 private:
+	static Keyboard* const keyboard;
+	static bool isInitialized;
+
 	static constexpr size_t maxKeys{ 256u };
 	static constexpr size_t maxEvents{ 16u };
 	std::bitset<maxKeys> keyboardState{};
@@ -54,6 +57,7 @@ public:
 	void OnKeyReleased(unsigned char code) noexcept;
 	void OnChar(char character) noexcept;
 
+	static Keyboard* GetKeyboardPointer() noexcept;
 private:
 	template<typename T>
 	static void TrimQueue(std::queue<T>& queue) noexcept;

@@ -19,6 +19,8 @@ public:
 	SceneManager operator=(const SceneManager&&) = delete;
 
 	void LoadScene(Scene* scene) noexcept;
+	void KeyInput(const Keyboard::Event& keyEvent) noexcept;
+	void MouseInput(const Mouse::Event& mouseEvent) noexcept;
 	void UpdateScene() noexcept;
 	void RenderScene() const;
 };

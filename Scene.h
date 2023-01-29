@@ -11,6 +11,7 @@ constexpr size_t maxLayers{ 8u };
 
 using LayerVector = std::vector<Object*>;
 using LayersArray = std::array<LayerVector*, maxLayers>;
+using Layer = std::size_t;
 
 class Scene
 {
@@ -27,9 +28,12 @@ public:
 
 	virtual void Load() = 0;
 	virtual void Unload() noexcept;
+	virtual void KeyInput(const Keyboard::Event& keyEvent) = 0;
+	virtual void MouseInput(const Mouse::Event& mouseEvent) = 0;
 	virtual void Update() = 0;
 	virtual void Render();
 
-	void AddObject(size_t layerIndex, Object* object) noexcept;
+	void AddObject(Layer layerIndex, Object* object) noexcept;
+	const LayerVector* GetLayerVector(Layer layerIndex) const noexcept;
 };
 

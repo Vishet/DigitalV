@@ -129,14 +129,17 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="App.cpp" />
-    <ClCompile Include="CrateObject.cpp" />
+    <ClCompile Include="Chip.cpp" />
     <ClCompile Include="Exception.cpp" />
     <ClCompile Include="GenericWindow.cpp" />
     <ClCompile Include="Graphics.cpp" />
+    <ClCompile Include="GUIChip.cpp" />
     <ClCompile Include="Keyboard.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MainWindow.cpp" />
     <ClCompile Include="Mouse.cpp" />
+    <ClCompile Include="NANDChip.cpp" />
+    <ClCompile Include="NANDGUIObject.cpp" />
     <ClCompile Include="Object.cpp" />
     <ClCompile Include="Scene.cpp" />
     <ClCompile Include="SceneManager.cpp" />
@@ -144,13 +147,16 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="App.h" />
-    <ClInclude Include="CrateObject.h" />
+    <ClInclude Include="Chip.h" />
     <ClInclude Include="Exception.h" />
     <ClInclude Include="GenericWindow.h" />
     <ClInclude Include="Graphics.h" />
+    <ClInclude Include="GUIChip.h" />
     <ClInclude Include="Keyboard.h" />
     <ClInclude Include="MainWindow.h" />
     <ClInclude Include="Mouse.h" />
+    <ClInclude Include="NANDChip.h" />
+    <ClInclude Include="NANDGUIObject.h" />
     <ClInclude Include="Object.h" />
     <ClInclude Include="Scene.h" />
     <ClInclude Include="SceneManager.h" />

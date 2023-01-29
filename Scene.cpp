@@ -30,7 +30,12 @@ void Scene::Render()
 	}
 }
 
-void Scene::AddObject(size_t layerIndex, Object* object) noexcept
+void Scene::AddObject(Layer layerIndex, Object* object) noexcept
 {
 	layersArray[layerIndex]->push_back(object);
+}
+
+const LayerVector* Scene::GetLayerVector(Layer layerIndex) const noexcept
+{
+	return layersArray[layerIndex];
 }

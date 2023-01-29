@@ -54,7 +54,7 @@ void GenericWindow::Initialize()
 	rect.right = width;
 	rect.bottom = height;
 	if (!absoluteDimension)
-		THROW_IF_LAST_FAILED(AdjustWindowRect(&rect, WS_OVERLAPPEDWINDOW, true));
+		THROW_IF_LAST_FAILED(AdjustWindowRect(&rect, WS_OVERLAPPEDWINDOW, false));
 
 	windowHandle = CreateWindowEx(
 		NULL,

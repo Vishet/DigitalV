@@ -10,9 +10,9 @@
 class App
 {
 private:
-	Keyboard keyboard{};
-	Mouse mouse{};
-	MainWindow mainWindow{ &keyboard, &mouse };
+	Keyboard* keyboard{ Keyboard::GetKeyboardPointer() };
+	Mouse* mouse{ Mouse::GetMousePointer() };
+	MainWindow mainWindow{ keyboard, mouse };
 	Graphics* graphics{ Graphics::GetGraphicsPointer() };
 	SceneManager sceneManager{};
 

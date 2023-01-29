@@ -3,6 +3,12 @@
 class Object
 {
 public:
+	enum class Type
+	{
+		NANDGUIObject
+	};
+
+public:
 	Object() = default;
 
 	Object(const Object&) = delete;
@@ -10,6 +16,7 @@ public:
 	Object operator=(const Object&) = delete;
 	Object operator=(const Object&&) = delete;
 
-	virtual void Draw() {};
+	virtual void Draw() = 0;
+	virtual bool IsColliding(float x, float y) = 0;
 };
 
