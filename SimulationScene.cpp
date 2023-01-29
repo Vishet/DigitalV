@@ -15,7 +15,9 @@ void SimulationScene::KeyInput(const Keyboard::Event& keyEvent) noexcept
 
 void SimulationScene::MouseInput(const Mouse::Event& mouseEvent) noexcept
 {
-	if (mouseEvent.IsLMBPressed())
+	auto eventType{ mouseEvent.GetType() };
+
+	if (eventType == Mouse::Event::Type::LMBPressed)
 	{
 		float mouseX{ static_cast<float>(mouseEvent.GetX()) };
 		float mouseY{ static_cast<float>(mouseEvent.GetY()) };
@@ -25,11 +27,27 @@ void SimulationScene::MouseInput(const Mouse::Event& mouseEvent) noexcept
 			AddObject(Layer::SELECTED_CHIP, chip);
 		}
 	}
+	else if (eventType == Mouse::Event::Type::LMBReleased)
+	{
+		auto selectedChipLayer{ GetLayerVector(Layer::SELECTED_CHIP) };
+		if (!selectedChipLayer->empty())
+		{
+			MoveObjectLayer(Layer::SELECTED_CHIP, 0, Layer::CIRCUIT);
+		}
+	}
 }
 
 void SimulationScene::Update()
 {
-	
+	if (mouse->IsLMBDown())
+	{
+		const LayerVector* selectedChipLayer{ GetLayerVector(Layer::SELECTED_CHIP) };
+		if(!selectedChipLayer->empty()) 
+		{
+			Object* selectedChip{ selectedChipLayer->front() };
+			selectedChip->SetPosition(mouse->GetX(), mouse->GetY());
+		}
+	}
 }
 
 bool SimulationScene::IsPointInRect(

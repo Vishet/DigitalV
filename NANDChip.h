@@ -3,8 +3,6 @@
 class NANDChip : public Chip
 {
 private:
-	float x;
-	float y;
 	static constexpr float width{ 200.0f };
 	static constexpr float height{ 75.0f };
 

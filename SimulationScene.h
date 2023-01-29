@@ -2,6 +2,7 @@
 
 #include "Scene.h"
 #include "Chip.h"
+#include "Mouse.h"
 
 class SimulationScene : public Scene
 {
@@ -12,6 +13,9 @@ private:
 		GUI_CHIPS,
 		SELECTED_CHIP
 	};
+
+private:
+	const Mouse* mouse{ Mouse::GetMousePointer() };
 
 public:
 	SimulationScene() = default;

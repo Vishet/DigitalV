@@ -6,7 +6,7 @@
 class GUIChip : public Object
 {
 public:
-	GUIChip() = default;
+	GUIChip(float x, float y);
 
 	GUIChip(const GUIChip&) = delete;
 	GUIChip(const GUIChip&&) = delete;

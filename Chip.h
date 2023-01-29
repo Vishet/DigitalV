@@ -6,7 +6,7 @@
 class Chip : public Object
 {
 public:
-	Chip() = default;
+	Chip(float x, float y);
 
 	Chip(const Chip&) = delete;
 	Chip(const Chip&&) = delete;

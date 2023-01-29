@@ -30,7 +30,7 @@ void SceneManager::UpdateScene() noexcept
 void SceneManager::RenderScene() const
 {
 	Graphics* graphics{ Graphics::GetGraphicsPointer() };
-	graphics->BeginDraw();
+	graphics->BeginDraw(0.0f, 0.0f, 0.0f);
 	currentScene->Render();
 	graphics->EndDraw();
 }
