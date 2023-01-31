@@ -84,6 +84,22 @@ int Mouse::GetY() const noexcept
 	return y;
 }
 
+int Mouse::GetLimitedX() const noexcept
+{
+	if (isXLimited)
+		return limitedX;
+	else
+		return x;
+}
+
+int Mouse::GetLimitedY() const noexcept
+{
+	if (isYLimited)
+		return limitedY;
+	else
+		return y;
+}
+
 bool Mouse::IsLMBDown() const noexcept
 {
 	return isLMBPressed;
@@ -179,6 +195,12 @@ void Mouse::OnMove(int x, int y) noexcept
 {
 	this->x = x;
 	this->y = y;
+
+	if (!isXLimited)
+		limitedX = x;
+	if (!isYLimited)
+		limitedY = y;
+
 	eventQueue.emplace(Event(Event::Type::Move, *this));
 	TrimQueue(eventQueue);
 }
@@ -188,6 +210,9 @@ void Mouse::OnEnter() noexcept
 	isInWindow = true;
 	eventQueue.emplace(Event(Event::Type::Enter, *this));
 	TrimQueue(eventQueue);
+
+	isXLimited = false;
+	isYLimited = false;
 }
 
 void Mouse::OnLeave() noexcept
@@ -195,6 +220,23 @@ void Mouse::OnLeave() noexcept
 	isInWindow = false;
 	eventQueue.emplace(Event(Event::Type::Leave, *this));
 	TrimQueue(eventQueue);
+
+	isXLimited = false;
+	isYLimited = false;
+}
+
+void Mouse::OnLimitX(bool limit, float x) noexcept
+{
+	if (limit)
+		limitedX = x;
+	isXLimited = limit;
+}
+
+void Mouse::OnLimitY(bool limit, float y) noexcept
+{
+	if (limit)
+		limitedY = y;
+	isYLimited = limit;
 }
 
 void Mouse::TrimQueue(std::queue<Event>& queue) noexcept

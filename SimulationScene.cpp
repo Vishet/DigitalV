@@ -45,7 +45,10 @@ void SimulationScene::Update()
 		if(!selectedChipLayer->empty()) 
 		{
 			Object* selectedChip{ selectedChipLayer->front() };
-			selectedChip->SetPosition(mouse->GetX(), mouse->GetY());
+			selectedChip->SetPosition(
+				static_cast<float>(mouse->GetLimitedX()), 
+				static_cast<float>(mouse->GetLimitedY())
+			);
 		}
 	}
 }

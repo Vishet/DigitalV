@@ -54,6 +54,10 @@ private:
 	std::queue<Event> eventQueue{};
 	int x{ 0 };
 	int y{ 0 };
+	int limitedX{ x };
+	int limitedY{ y };
+	bool isXLimited{ false };
+	bool isYLimited{ false };
 	bool isLMBPressed{ false };
 	bool isRMBPressed{ false };
 	bool isMMBPressed{ false };
@@ -72,6 +76,8 @@ public:
 	const std::pair<int, int> GetPosition() const noexcept;
 	int GetX() const noexcept;
 	int GetY() const noexcept;
+	int GetLimitedX() const noexcept;
+	int GetLimitedY() const noexcept;
 	bool IsLMBDown() const noexcept;
 	bool IsRMBDown() const noexcept;
 	bool IsMMBDown() const noexcept;
@@ -90,6 +96,8 @@ public:
 	void OnMove(int x, int y) noexcept;
 	void OnEnter() noexcept;
 	void OnLeave() noexcept;
+	void OnLimitX(bool limit, float x = 0) noexcept;
+	void OnLimitY(bool limit, float y = 0) noexcept;
 
 	static void TrimQueue(std::queue<Event>& queue) noexcept;
 

@@ -118,22 +118,41 @@ void GenericWindow::HandleInput(UINT message, WPARAM wParam, LPARAM lParam) noex
 		const POINTS pt{ MAKEPOINTS(lParam) };
 		if (pt.x >= 0 && pt.x < width && pt.y >= 0 && pt.y < height)
 		{
+			mouse->OnLimitX(false);
+			mouse->OnLimitY(false);
 			mouse->OnMove(pt.x, pt.y);
 
 			if (!mouse->IsInWindow())
 			{
 				SetCapture(windowHandle);
 				mouse->OnEnter();
+				OutputDebugStringA("entrou\n");
 			}
 		}
 		else
 		{
 			if (wParam & (MK_LBUTTON | MK_RBUTTON | MK_MBUTTON))
 			{
+				if (pt.x < 0)
+					mouse->OnLimitX(true, 0);
+				else if(pt.x >= width)
+					mouse->OnLimitX(true, width);
+				else
+					mouse->OnLimitX(false);
+					
+
+				if (pt.y < 0)
+					mouse->OnLimitY(true, 0);
+				else if(pt.y >= height)
+					mouse->OnLimitY(true, height);
+				else
+					mouse->OnLimitY(false);
+
 				mouse->OnMove(pt.x, pt.y);
 			}
 			else
 			{
+
 				ReleaseCapture();
 				mouse->OnLeave();
 			}
