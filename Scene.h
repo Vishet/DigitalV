@@ -37,6 +37,7 @@ public:
 	ObjectIndex AddObject(Layer layerIndex, Object* object) noexcept;
 	void DeleteObject(Layer layerIndex, ObjectIndex index) noexcept;
 	Object* GetObject(Layer layerIndex, ObjectIndex index) const noexcept;
+	ObjectIndex GetObjectIndex(Layer layerIndex, const Object* object) const noexcept;
 	ObjectIndex MoveObjectLayer(Layer sourceLayer, ObjectIndex index, Layer destinationLayer);
 
 	const LayerVector* GetLayerVector(Layer layerIndex) const noexcept;

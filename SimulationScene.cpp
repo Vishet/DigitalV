@@ -18,19 +18,14 @@ void SimulationScene::MouseInput(const Mouse::Event& mouseEvent) noexcept
 
 	if (eventType == Mouse::Event::Type::LMBPressed)
 	{
-		float mouseX{ static_cast<float>(mouseEvent.GetX()) };
-		float mouseY{ static_cast<float>(mouseEvent.GetY()) };
-		Chip* chip{ GetClickedGUIChip(mouseX, mouseY) };
-		if (chip)
-			AddObject(Layer::SELECTED_CHIP, chip);
+		int mouseX{ mouseEvent.GetX() };
+		int mouseY{ mouseEvent.GetY() };
+
+		SelectChip(mouseX, mouseY);
 	}
 	else if (eventType == Mouse::Event::Type::LMBReleased)
 	{
-		auto selectedChipLayer{ GetLayerVector(Layer::SELECTED_CHIP) };
-		if (!selectedChipLayer->empty())
-		{
-			MoveObjectLayer(Layer::SELECTED_CHIP, 0, Layer::CIRCUIT);
-		}
+		DropSelectedChip();
 	}
 }
 
@@ -38,15 +33,7 @@ void SimulationScene::Update()
 {
 	if (mouse->IsLMBDown())
 	{
-		const LayerVector* selectedChipLayer{ GetLayerVector(Layer::SELECTED_CHIP) };
-		if(!selectedChipLayer->empty()) 
-		{
-			Object* selectedChip{ selectedChipLayer->front() };
-			selectedChip->SetPosition(
-				static_cast<float>(mouse->GetLimitedX()), 
-				static_cast<float>(mouse->GetLimitedY())
-			);
-		}
+		DragSelectedChip();
 	}
 }
 
@@ -61,7 +48,7 @@ bool SimulationScene::IsPointInRect(
 		return false;
 }
 
-Chip* SimulationScene::GetClickedGUIChip(float x, float y) noexcept
+Chip* SimulationScene::GetClickedChip(float x, float y) noexcept
 {
 	auto guiLayer{ GetLayerVector(GUI_CHIPS) };
 	for (const auto& object : *guiLayer)
@@ -71,5 +58,47 @@ Chip* SimulationScene::GetClickedGUIChip(float x, float y) noexcept
 			return new Chip(*guiChip);
 	}
 
+	auto circuitLayer{ GetLayerVector(CIRCUIT) };
+	for (const auto& object : *circuitLayer)
+	{
+		auto chip{ dynamic_cast<Chip*>(object) };
+		if (chip->IsColliding(x, y))
+			return chip;
+	}
+
 	return nullptr;
+}
+
+void SimulationScene::SelectChip(int mouseX, int mouseY) noexcept
+{
+	Chip* chip{ GetClickedChip(static_cast<float>(mouseX), static_cast<float>(mouseY)) };
+	if (chip)
+	{
+		if (chip->IsInLayer())
+			MoveObjectLayer(chip->GetLayerIndex(), GetObjectIndex(CIRCUIT, chip), SELECTED_CHIP);
+		else
+			AddObject(SELECTED_CHIP, chip);
+	}
+}
+
+void SimulationScene::DropSelectedChip() noexcept
+{
+	auto selectedChipLayer{ GetLayerVector(Layer::SELECTED_CHIP) };
+	if (!selectedChipLayer->empty())
+	{
+		MoveObjectLayer(Layer::SELECTED_CHIP, 0, Layer::CIRCUIT);
+	}
+}
+
+void SimulationScene::DragSelectedChip() noexcept
+{
+	const LayerVector* selectedChipLayer{ GetLayerVector(Layer::SELECTED_CHIP) };
+	if (!selectedChipLayer->empty())
+	{
+		Object* selectedChip{ selectedChipLayer->front() };
+		selectedChip->SetPosition(
+			static_cast<float>(mouse->GetLimitedX()),
+			static_cast<float>(mouse->GetLimitedY())
+		);
+	}
 }

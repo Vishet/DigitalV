@@ -32,6 +32,10 @@ public:
 
 private:
 	bool IsPointInRect(float x, float y, float recX, float recY, float recX2, float rectY2) const noexcept;
-	Chip* GetClickedGUIChip(float x, float y) noexcept;
+	Chip* GetClickedChip(float x, float y) noexcept;
+
+	void SelectChip(int mouseX, int mouseY) noexcept;
+	void DropSelectedChip() noexcept;
+	void DragSelectedChip() noexcept;
 };
 
