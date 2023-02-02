@@ -14,8 +14,8 @@ public:
 
 public:
 	Object(float x, float y);
-
-	Object(const Object&) = delete;
+	Object(const Object&) = default;
+	
 	Object(const Object&&) = delete;
 	Object operator=(const Object&) = delete;
 	Object operator=(const Object&&) = delete;

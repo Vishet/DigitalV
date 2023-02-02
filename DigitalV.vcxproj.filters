@@ -25,18 +25,6 @@
     <Filter Include="Source Files\Objects">
       <UniqueIdentifier>{68b60196-ca8b-4db6-adce-d14de84fa5c3}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\Objects\GUI Objects">
-      <UniqueIdentifier>{e17071f4-1f87-419a-8079-c8a82995dcbf}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\Objects\GUI Objects">
-      <UniqueIdentifier>{7da64bf6-224a-46a5-9b27-333f8aba3126}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\Objects\Chip Objects">
-      <UniqueIdentifier>{43dbb3d3-3428-461f-9317-f37f108c6bd0}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\Objects\Chip Objects">
-      <UniqueIdentifier>{b3b122d5-45bb-4e90-a032-a822ee064747}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source Files\Engine">
       <UniqueIdentifier>{84d67c60-1e25-4a99-bced-10cf6aae575b}</UniqueIdentifier>
     </Filter>
@@ -66,17 +54,8 @@
     <ClCompile Include="Chip.cpp">
       <Filter>Source Files\Objects</Filter>
     </ClCompile>
-    <ClCompile Include="GUIChip.cpp">
-      <Filter>Source Files\Objects</Filter>
-    </ClCompile>
     <ClCompile Include="SimulationScene.cpp">
       <Filter>Source Files\Scenes</Filter>
-    </ClCompile>
-    <ClCompile Include="NANDGUIObject.cpp">
-      <Filter>Source Files\Objects\GUI Objects</Filter>
-    </ClCompile>
-    <ClCompile Include="NANDChip.cpp">
-      <Filter>Source Files\Objects\Chip Objects</Filter>
     </ClCompile>
     <ClCompile Include="App.cpp">
       <Filter>Source Files\Engine</Filter>
@@ -116,17 +95,8 @@
     <ClInclude Include="Chip.h">
       <Filter>Header Files\Objects</Filter>
     </ClInclude>
-    <ClInclude Include="GUIChip.h">
-      <Filter>Header Files\Objects</Filter>
-    </ClInclude>
     <ClInclude Include="SimulationScene.h">
       <Filter>Header Files\Scenes</Filter>
-    </ClInclude>
-    <ClInclude Include="NANDGUIObject.h">
-      <Filter>Header Files\Objects\GUI Objects</Filter>
-    </ClInclude>
-    <ClInclude Include="NANDChip.h">
-      <Filter>Header Files\Objects\Chip Objects</Filter>
     </ClInclude>
     <ClInclude Include="App.h">
       <Filter>Header Files\Engine</Filter>

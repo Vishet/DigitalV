@@ -39,7 +39,7 @@ public:
 	bool isVisible() const noexcept;
 	HWND GetWindowHandle() const noexcept { return windowHandle; }
 	void Initialize();
-	void HandleInput(UINT message, WPARAM wParam, LPARAM lParam) noexcept;
+	bool HandleInput(UINT message, WPARAM wParam, LPARAM lParam) noexcept;
 
 private:
 	virtual LRESULT WindowProcedure(HWND windowHandle, UINT message, WPARAM wParam, LPARAM lParam) = 0;

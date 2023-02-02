@@ -70,7 +70,7 @@ void GenericWindow::Initialize()
 	THROW_IF_LAST_FAILED(windowHandle);
 }
 
-void GenericWindow::HandleInput(UINT message, WPARAM wParam, LPARAM lParam) noexcept
+bool GenericWindow::HandleInput(UINT message, WPARAM wParam, LPARAM lParam) noexcept
 {
 	switch (message)
 	{
@@ -116,6 +116,7 @@ void GenericWindow::HandleInput(UINT message, WPARAM wParam, LPARAM lParam) noex
 	case WM_MOUSEMOVE:
 	{
 		const POINTS pt{ MAKEPOINTS(lParam) };
+		OutputDebugString((std::to_string(pt.x) + " x " + std::to_string(pt.y) + "\n").c_str());
 		if (pt.x >= 0 && pt.x < width && pt.y >= 0 && pt.y < height)
 		{
 			mouse->OnLimitX(false);
@@ -171,7 +172,11 @@ void GenericWindow::HandleInput(UINT message, WPARAM wParam, LPARAM lParam) noex
 		keyboard->Clear();
 		mouse->Clear();
 		break;
+	default:
+		return false;
 	}
+
+	return true;
 }
 
 LRESULT CALLBACK GenericWindow::WindowProcedureCanalizer(HWND windowHandle, UINT message, WPARAM wParam, LPARAM lParam) noexcept
@@ -190,8 +195,10 @@ LRESULT CALLBACK GenericWindow::WindowProcedureCanalizer(HWND windowHandle, UINT
 		GenericWindow* const windowPointer{ reinterpret_cast<GenericWindow* const>(GetWindowLongPtr(windowHandle, GWLP_USERDATA)) };
 		if (windowPointer)
 		{
-			windowPointer->HandleInput(message, wParam, lParam);
-			return windowPointer->WindowProcedure(windowHandle, message, wParam, lParam);
+			if (windowPointer->HandleInput(message, wParam, lParam))
+				return 0;
+			else
+				return windowPointer->WindowProcedure(windowHandle, message, wParam, lParam);
 		}
 		else
 			return DefWindowProc(windowHandle, message, wParam, lParam);

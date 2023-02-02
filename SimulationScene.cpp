@@ -1,11 +1,10 @@
 #include "SimulationScene.h"
 
-#include "NANDGUIObject.h"
-#include "NANDChip.h"
+#include "Chip.h"
 
 void SimulationScene::Load()
 {
-	AddObject(Layer::GUI_CHIPS, new NANDGUIObject(150.0f, 632.5f));
+	AddObject(Layer::GUI_CHIPS, new Chip(150.0f, 632.5f, L"NAND"));
 }
 
 void SimulationScene::KeyInput(const Keyboard::Event& keyEvent) noexcept
@@ -23,9 +22,7 @@ void SimulationScene::MouseInput(const Mouse::Event& mouseEvent) noexcept
 		float mouseY{ static_cast<float>(mouseEvent.GetY()) };
 		Chip* chip{ GetClickedGUIChip(mouseX, mouseY) };
 		if (chip)
-		{
 			AddObject(Layer::SELECTED_CHIP, chip);
-		}
 	}
 	else if (eventType == Mouse::Event::Type::LMBReleased)
 	{
@@ -69,9 +66,9 @@ Chip* SimulationScene::GetClickedGUIChip(float x, float y) noexcept
 	auto guiLayer{ GetLayerVector(GUI_CHIPS) };
 	for (const auto& object : *guiLayer)
 	{
-		auto guiChip{ dynamic_cast<NANDGUIObject*>(object) };
-		if(guiChip->IsColliding(x, y))
-			return guiChip->GetChip();
+		auto guiChip{ dynamic_cast<Chip*>(object) };
+		if (guiChip->IsColliding(x, y))
+			return new Chip(*guiChip);
 	}
 
 	return nullptr;

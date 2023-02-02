@@ -35,11 +35,11 @@ std::optional<int> App::ProcessMessages() noexcept
 
 	while (PeekMessage(&message, NULL, 0, 0, PM_REMOVE))
 	{
-		if (message.message == WM_QUIT)
-			return static_cast<int>(message.wParam);
-
 		TranslateMessage(&message);
 		DispatchMessage(&message);
+
+		if (message.message == WM_QUIT)
+			return static_cast<int>(message.wParam);
 	}
 
 	return {};
