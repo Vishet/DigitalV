@@ -15,6 +15,7 @@ private:
 public:
 	Object(float x, float y);
 	Object(const Object& object);
+	virtual Object* Clone() { return new Object(*this); }
 
 	Object(const Object&&) = delete;
 	Object operator=(const Object&) = delete;

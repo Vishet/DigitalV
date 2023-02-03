@@ -225,14 +225,14 @@ void Mouse::OnLeave() noexcept
 	isYLimited = false;
 }
 
-void Mouse::OnLimitX(bool limit, float x) noexcept
+void Mouse::OnLimitX(bool limit, int x) noexcept
 {
 	if (limit)
 		limitedX = x;
 	isXLimited = limit;
 }
 
-void Mouse::OnLimitY(bool limit, float y) noexcept
+void Mouse::OnLimitY(bool limit, int y) noexcept
 {
 	if (limit)
 		limitedY = y;

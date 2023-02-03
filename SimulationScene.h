@@ -9,10 +9,9 @@ class SimulationScene : public Scene
 private:
 	enum Layer {
 		CIRCUIT,
+		PALLETE,
 		GUI,
-		GUI_CHIPS,
-		GUI_TOGGLES,
-		SELECTED_CHIP
+		SELECTED_OBJECT
 	};
 
 private:
@@ -33,10 +32,17 @@ public:
 
 private:
 	bool IsPointInRect(float x, float y, float recX, float recY, float recX2, float rectY2) const noexcept;
-	Chip* GetClickedChip(float x, float y) noexcept;
+	
+	Object* GetClickedPalleteObject(int mouseX, int mouseY) noexcept;
+	bool SelectPalleteObject(int mouseX, int mouseY) noexcept;
+	void DragSelectedObject() noexcept;
+	void DropSelectedObject() noexcept;
 
-	void SelectChip(int mouseX, int mouseY) noexcept;
+	
+	Object* GetClickedCircuitObject(float x, float y) noexcept;
+	void SelectCircuitObject(int mouseX, int mouseY) noexcept;
 	void DropSelectedChip() noexcept;
 	void DragSelectedChip() noexcept;
+	
 };
 

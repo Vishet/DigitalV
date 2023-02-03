@@ -19,13 +19,15 @@ public:
 		float radius, float strokeWidth, 
 		float r, float g, float b, float a = 1.0f
 	);
+	ToggleSwitch(const ToggleSwitch& toggleSwitch);
 
-	ToggleSwitch(const ToggleSwitch&) = delete;
+	Object* Clone() override { return new ToggleSwitch(GetX(), GetY(), radius, strokeWidth, r, g, b, a); }
+
 	ToggleSwitch(const ToggleSwitch&&) = delete;
 	ToggleSwitch operator=(const ToggleSwitch&) = delete;
 	ToggleSwitch operator=(const ToggleSwitch&&) = delete;
 
-	bool IsColliding(float x, float y) const noexcept;
+	bool IsColliding(float x, float y) override;
 	void ToggleState() noexcept;
 	void Draw() override;
 };

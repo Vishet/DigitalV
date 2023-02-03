@@ -18,6 +18,7 @@ private:
 public:
 	Chip(float x, float y, float width, float height, const std::wstring& label);
 	Chip(const Chip&);
+	Object* Clone() override { return new Chip(*this); }
 	~Chip();
 
 	Chip(const Chip&&) = delete;

@@ -10,16 +10,27 @@ ToggleSwitch::ToggleSwitch(
 	r{ r }, g{ g }, b{ b }, a{ a }
 {
 }
-
-bool ToggleSwitch::IsColliding(float x, float y) const noexcept
+ToggleSwitch::ToggleSwitch(const ToggleSwitch& toggleSwitch) :
+	Object(toggleSwitch)
 {
-	float distance = sqrt(pow(GetX() - x, 2) + pow(GetY() - y, 2));
+	state = toggleSwitch.state;
+	radius = toggleSwitch.radius;
+	strokeWidth = toggleSwitch.strokeWidth;
+	r = toggleSwitch.r;
+	g = toggleSwitch.g;
+	b = toggleSwitch.b;
+	a = toggleSwitch.a;
+}
+
+bool ToggleSwitch::IsColliding(float x, float y)
+{
+	float distance = static_cast<float>(sqrt(pow(GetX() - x, 2) + pow(GetY() - y, 2)));
 	return (distance <= radius);
 }
 
 void ToggleSwitch::ToggleState() noexcept
 {
-	state *= -1;
+	state = !state;
 }
 
 void ToggleSwitch::Draw()

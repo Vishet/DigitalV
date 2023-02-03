@@ -116,7 +116,6 @@ bool GenericWindow::HandleInput(UINT message, WPARAM wParam, LPARAM lParam) noex
 	case WM_MOUSEMOVE:
 	{
 		const POINTS pt{ MAKEPOINTS(lParam) };
-		OutputDebugString((std::to_string(pt.x) + " x " + std::to_string(pt.y) + "\n").c_str());
 		if (pt.x >= 0 && pt.x < width && pt.y >= 0 && pt.y < height)
 		{
 			mouse->OnLimitX(false);
@@ -127,7 +126,6 @@ bool GenericWindow::HandleInput(UINT message, WPARAM wParam, LPARAM lParam) noex
 			{
 				SetCapture(windowHandle);
 				mouse->OnEnter();
-				OutputDebugStringA("entrou\n");
 			}
 		}
 		else

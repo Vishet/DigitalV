@@ -96,8 +96,8 @@ public:
 	void OnMove(int x, int y) noexcept;
 	void OnEnter() noexcept;
 	void OnLeave() noexcept;
-	void OnLimitX(bool limit, float x = 0) noexcept;
-	void OnLimitY(bool limit, float y = 0) noexcept;
+	void OnLimitX(bool limit, int x = 0) noexcept;
+	void OnLimitY(bool limit, int y = 0) noexcept;
 
 	static void TrimQueue(std::queue<Event>& queue) noexcept;
 

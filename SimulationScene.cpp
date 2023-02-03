@@ -8,10 +8,10 @@ void SimulationScene::Load()
 	Chip* NANDChip{ new Chip(150.0f, 632.5f, 200.0f, 75.0f, L"NAND") };
 	NANDChip->AddInput(-100.0f, 30.0f);
 	NANDChip->AddInput(-100.0f, -30.0f);
-	AddObject(Layer::GUI_CHIPS, NANDChip);
+	AddObject(Layer::PALLETE, NANDChip);
 
 	ToggleSwitch* toggleSwitch{ new ToggleSwitch(400.0f, 632.5f, 50.0f, 1.0f, 0.0f, 0.0f, 0.5f) };
-	AddObject(Layer::GUI_TOGGLES, toggleSwitch);
+	AddObject(Layer::PALLETE, toggleSwitch);
 }
 
 void SimulationScene::KeyInput(const Keyboard::Event& keyEvent) noexcept
@@ -28,11 +28,12 @@ void SimulationScene::MouseInput(const Mouse::Event& mouseEvent) noexcept
 		int mouseX{ mouseEvent.GetX() };
 		int mouseY{ mouseEvent.GetY() };
 
-		SelectChip(mouseX, mouseY);
+		if(!SelectPalleteObject(mouseX, mouseY));
+			SelectCircuitObject(mouseX, mouseY);
 	}
 	else if (eventType == Mouse::Event::Type::LMBReleased)
 	{
-		DropSelectedChip();
+		DropSelectedObject();
 	}
 }
 
@@ -40,7 +41,7 @@ void SimulationScene::Update()
 {
 	if (mouse->IsLMBDown())
 	{
-		DragSelectedChip();
+		DragSelectedObject();
 	}
 }
 
@@ -55,59 +56,79 @@ bool SimulationScene::IsPointInRect(
 		return false;
 }
 
-Chip* SimulationScene::GetClickedChip(float x, float y) noexcept
+Object* SimulationScene::GetClickedPalleteObject(int mouseX, int mouseY) noexcept
 {
-	auto guiLayer{ GetLayerVector(GUI_CHIPS) };
-	for (const auto& object : *guiLayer)
+	auto palleteLayer{ GetLayerVector(PALLETE) };
+	for (const auto& palleteObject : *palleteLayer)
 	{
-		auto guiChip{ dynamic_cast<Chip*>(object) };
-		if (guiChip->IsColliding(x, y))
-			return new Chip(*guiChip);
-	}
-
-	auto circuitLayer{ GetLayerVector(CIRCUIT) };
-	for (auto it{ circuitLayer->rbegin() }; it != circuitLayer->rend(); ++it)
-	{
-		auto chip{ dynamic_cast<Chip*>(*it) };
-		if (chip->IsColliding(x, y))
-			return chip;
+		if (palleteObject->IsColliding(
+				static_cast<float>(mouseX), 
+				static_cast<float>(mouseY)
+			)
+		)
+			return palleteObject->Clone();
 	}
 
 	return nullptr;
 }
 
-void SimulationScene::SelectChip(int mouseX, int mouseY) noexcept
+bool SimulationScene::SelectPalleteObject(int mouseX, int mouseY) noexcept
 {
-	Chip* chip{ GetClickedChip(static_cast<float>(mouseX), static_cast<float>(mouseY)) };
-	if (chip)
+	Object* palleteObject{
+		GetClickedPalleteObject(
+			mouseX,
+			mouseY
+		)
+	};
+
+	if (palleteObject)
 	{
-		if (chip->IsInLayer())
-			MoveObjectLayer(chip->GetLayerIndex(), GetObjectIndex(CIRCUIT, chip), SELECTED_CHIP);
-		else
-		{
-			AddObject(SELECTED_CHIP, chip);
-		}
+		AddObject(SELECTED_OBJECT, palleteObject);
+		return true;
 	}
+	else
+		return false;
 }
 
-void SimulationScene::DropSelectedChip() noexcept
+void SimulationScene::DragSelectedObject() noexcept
 {
-	auto selectedChipLayer{ GetLayerVector(Layer::SELECTED_CHIP) };
-	if (!selectedChipLayer->empty())
+	const LayerVector* selectedObjectLayer{ GetLayerVector(Layer::SELECTED_OBJECT) };
+	if (!selectedObjectLayer->empty())
 	{
-		MoveObjectLayer(Layer::SELECTED_CHIP, 0, Layer::CIRCUIT);
-	}
-}
-
-void SimulationScene::DragSelectedChip() noexcept
-{
-	const LayerVector* selectedChipLayer{ GetLayerVector(Layer::SELECTED_CHIP) };
-	if (!selectedChipLayer->empty())
-	{
-		Object* selectedChip{ selectedChipLayer->front() };
-		selectedChip->SetPosition(
+		Object* selectedObject{ selectedObjectLayer->front() };
+		selectedObject->SetPosition(
 			static_cast<float>(mouse->GetLimitedX()),
 			static_cast<float>(mouse->GetLimitedY())
 		);
 	}
+}
+
+void SimulationScene::DropSelectedObject() noexcept
+{
+	auto selectedObjectLayer{ GetLayerVector(Layer::SELECTED_OBJECT) };
+	if (!selectedObjectLayer->empty())
+	{
+		MoveObjectLayer(Layer::SELECTED_OBJECT, 0, Layer::CIRCUIT);
+	}
+}
+
+
+Object* SimulationScene::GetClickedCircuitObject(float x, float y) noexcept
+{
+	auto circuitLayer{ GetLayerVector(CIRCUIT) };
+	for (auto it{ circuitLayer->rbegin() }; it != circuitLayer->rend(); ++it)
+	{
+		auto object{ dynamic_cast<Object*>(*it) };
+		if (object->IsColliding(x, y))
+			return object;
+	}
+
+	return nullptr;
+}
+
+void SimulationScene::SelectCircuitObject(int mouseX, int mouseY) noexcept
+{
+	Object* object{ GetClickedCircuitObject(static_cast<float>(mouseX), static_cast<float>(mouseY)) };
+	if (object)
+		MoveObjectLayer(object->GetLayerIndex(), GetObjectIndex(CIRCUIT, object), Layer::SELECTED_OBJECT);
 }
