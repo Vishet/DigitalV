@@ -9,6 +9,7 @@ void SimulationScene::Load()
 	Chip* NANDChip{ new Chip(150.0f, 632.5f, 200.0f, 75.0f, L"NAND") };
 	NANDChip->AddInput(-100.0f, 30.0f);
 	NANDChip->AddInput(-100.0f, -30.0f);
+	NANDChip->AddOutput(100.0f, 0.0f);
 	AddObject(LayerIndex::PALLETE, NANDChip);
 
 	ToggleSwitch* toggleSwitch{ new ToggleSwitch(400.0f, 632.5f, 50.0f, 1.0f, 0.0f, 0.0f, 0.5f) };

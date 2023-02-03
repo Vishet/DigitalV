@@ -21,6 +21,10 @@ Chip::Chip(const Chip& chip) :
 	{
 		AddInput(sourceInput->GetXOffset(), sourceInput->GetYOffset());
 	}
+	for (auto sourceOutput : chip.outputs)
+	{
+		AddInput(sourceOutput->GetXOffset(), sourceOutput->GetYOffset());
+	}
 }
 
 Chip::~Chip()
@@ -28,6 +32,10 @@ Chip::~Chip()
 	for (auto input : inputs)
 	{
 		delete input;
+	}
+	for (auto output : outputs)
+	{
+		delete output;
 	}
 }
 
@@ -50,6 +58,9 @@ void Chip::Draw()
 
 	for (auto input : inputs)
 		input->Draw();
+
+	for (auto output : outputs)
+		output->Draw();
 }
 
 bool Chip::IsColliding(float x, float y)
@@ -70,10 +81,17 @@ void Chip::AddInput(float xOffset, float yOffset) noexcept
 	inputs.push_back(new ChipInput(GetX(), GetY(), xOffset, yOffset));
 }
 
+void Chip::AddOutput(float xOffset, float yOffset) noexcept
+{
+	outputs.push_back(new ChipOutput(GetX(), GetY(), xOffset, yOffset));
+}
+
 void Chip::SetPosition(float x, float y) noexcept
 {
 	Object::SetPosition(x, y);
 
 	for (auto input : inputs)
 		input->SetPosition(x, y);
+	for (auto output : outputs)
+		output->SetPosition(x, y);
 }

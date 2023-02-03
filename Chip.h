@@ -2,6 +2,7 @@
 
 #include "Object.h"
 #include "ChipInput.h"
+#include "ChipOutput.h"
 #include <vector>
 #include <string>
 
@@ -14,6 +15,7 @@ private:
 	float height;
 	std::wstring label;
 	std::vector<ChipInput*> inputs{};
+	std::vector<ChipOutput*> outputs{};
 
 public:
 	Chip(float x, float y, float width, float height, const std::wstring& label);
@@ -28,6 +30,7 @@ public:
 	void Draw() override;
 	bool IsColliding(float x, float y) override;
 	void AddInput(float xOffset, float yOffset) noexcept;
+	void AddOutput(float xOffset, float yOffset) noexcept;
 	void SetPosition(float x, float y) noexcept override;
 };
 

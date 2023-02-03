@@ -1,9 +1,7 @@
-#include "ChipInput.h"
+#include "ChipOutput.h"
 #include "Graphics.h"
-#include "Chip.h"
-#include "LayersIndexes.h"
 
-ChipInput::ChipInput(float chipX, float chipY, float xOffset, float yOffset, bool state) :
+ChipOutput::ChipOutput(float chipX, float chipY, float xOffset, float yOffset, bool state) :
 	Object(chipX + xOffset, chipY + yOffset, LayerIndex::NONE),
 	state{ state },
 	xOffset{ xOffset },
@@ -11,7 +9,7 @@ ChipInput::ChipInput(float chipX, float chipY, float xOffset, float yOffset, boo
 {
 }
 
-ChipInput::ChipInput(const ChipInput& chipInput)  :
+ChipOutput::ChipOutput(const ChipOutput& chipInput) :
 	Object(chipInput)
 {
 	state = chipInput.state;
@@ -19,18 +17,18 @@ ChipInput::ChipInput(const ChipInput& chipInput)  :
 	yOffset = chipInput.yOffset;
 }
 
-void ChipInput::SetState(bool state) noexcept
+void ChipOutput::SetState(bool state) noexcept
 {
 	this->state = state;
 }
 
-void ChipInput::Draw()
+void ChipOutput::Draw()
 {
 	Graphics* graphics{ Graphics::GetGraphicsPointer() };
 	graphics->FillCircle(GetX(), GetY(), radius, r, g, b);
 }
 
-void ChipInput::SetPosition(float x, float y) noexcept
+void ChipOutput::SetPosition(float x, float y) noexcept
 {
 	Object::SetPosition(x + xOffset, y + yOffset);
 }
