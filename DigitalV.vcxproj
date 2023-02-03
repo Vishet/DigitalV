@@ -130,6 +130,7 @@
   <ItemGroup>
     <ClCompile Include="App.cpp" />
     <ClCompile Include="Chip.cpp" />
+    <ClCompile Include="ChipInput.cpp" />
     <ClCompile Include="Exception.cpp" />
     <ClCompile Include="GenericWindow.cpp" />
     <ClCompile Include="Graphics.cpp" />
@@ -141,10 +142,12 @@
     <ClCompile Include="Scene.cpp" />
     <ClCompile Include="SceneManager.cpp" />
     <ClCompile Include="SimulationScene.cpp" />
+    <ClCompile Include="ToggleSwitch.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="App.h" />
     <ClInclude Include="Chip.h" />
+    <ClInclude Include="ChipInput.h" />
     <ClInclude Include="Exception.h" />
     <ClInclude Include="GenericWindow.h" />
     <ClInclude Include="Graphics.h" />
@@ -155,6 +158,7 @@
     <ClInclude Include="Scene.h" />
     <ClInclude Include="SceneManager.h" />
     <ClInclude Include="SimulationScene.h" />
+    <ClInclude Include="ToggleSwitch.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -175,12 +175,30 @@ void Graphics::DrawWString(const std::wstring& text, const D2D1_COLOR_F& textCol
 	);
 }
 
-void Graphics::FillCircle(const D2D1_POINT_2F& centerPoint, const float radius, const D2D1_COLOR_F& bgColor) const
+void Graphics::FillCircle (
+	float x, float y,
+	const float radius,
+	float r, float g, float b, float a
+) const
 {
 	CComPtr<ID2D1SolidColorBrush> pBrush{};
 
 	HRESULT hr{};
-	THROW_IF_FAILED_HR(pRenderTarget->CreateSolidColorBrush(bgColor, &pBrush));
+	THROW_IF_FAILED_HR(pRenderTarget->CreateSolidColorBrush(D2D1::ColorF(r, g, b, a), &pBrush));
 
-	pRenderTarget->FillEllipse(D2D1::Ellipse(centerPoint, radius, radius), pBrush);
+	pRenderTarget->FillEllipse(D2D1::Ellipse(D2D1::Point2F(x, y), radius, radius), pBrush);
+}
+
+void Graphics::DrawCircle(
+	float x, float y,
+	const float radius, float strokeWidth,
+	float r, float g, float b, float a
+) const
+{
+	CComPtr<ID2D1SolidColorBrush> pBrush{};
+
+	HRESULT hr{};
+	THROW_IF_FAILED_HR(pRenderTarget->CreateSolidColorBrush(D2D1::ColorF(r, g, b, a), &pBrush));
+
+	pRenderTarget->DrawEllipse(D2D1::Ellipse(D2D1::Point2F(x, y), radius, radius), pBrush, strokeWidth);
 }

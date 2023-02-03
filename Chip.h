@@ -1,19 +1,24 @@
 #pragma once
 
 #include "Object.h"
+#include "ChipInput.h"
 #include <vector>
 #include <string>
+
+using InputIndex = std::size_t;
 
 class Chip : public Object
 {
 private:
-	float width{ 200.0f };
-	float height{ 75.0f };
+	float width;
+	float height;
 	std::wstring label;
+	std::vector<ChipInput*> inputs{};
 
 public:
-	Chip(float x, float y, const std::wstring& label);
-	Chip(const Chip&) = default;
+	Chip(float x, float y, float width, float height, const std::wstring& label);
+	Chip(const Chip&);
+	~Chip();
 
 	Chip(const Chip&&) = delete;
 	Chip operator=(const Chip&) = delete;
@@ -21,5 +26,7 @@ public:
 
 	void Draw() override;
 	bool IsColliding(float x, float y) override;
+	void AddInput(float xOffset, float yOffset) noexcept;
+	void SetPosition(float x, float y) noexcept override;
 };
 

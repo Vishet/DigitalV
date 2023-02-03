@@ -11,6 +11,7 @@ private:
 		CIRCUIT,
 		GUI,
 		GUI_CHIPS,
+		GUI_TOGGLES,
 		SELECTED_CHIP
 	};
 

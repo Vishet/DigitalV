@@ -58,5 +58,14 @@ public:
 		float r, float g, float b, float a = 1.0f
 	) const;
 	void DrawWString(const std::wstring& text, const D2D1_COLOR_F& textColor, int x, int y);
-	void FillCircle(const D2D1_POINT_2F& centerPoint, const float radius, const D2D1_COLOR_F& bgColor) const;
+	void FillCircle(
+		float x, float y, 
+		const float radius, 
+		float r, float g, float b, float a = 1.0f
+	) const;
+	void DrawCircle(
+		float x, float y,
+		float radius, float strokeWidth,
+		float r, float g, float b, float a = 1.0f
+	) const;
 };

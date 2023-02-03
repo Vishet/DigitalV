@@ -20,12 +20,12 @@ public:
 	Object operator=(const Object&) = delete;
 	Object operator=(const Object&&) = delete;
 
-	virtual void Draw() = 0;
-	virtual bool IsColliding(float x, float y) = 0;
+	virtual void Draw() {}
+	virtual bool IsColliding(float x, float y) { return false; }
 
 	inline void SetX(float x) noexcept { this->x = x; }
 	inline void SetY(float y) noexcept { this->y = y; }
-	inline void SetPosition(float x, float y) noexcept { this->x = x; this->y = y; }
+	virtual void SetPosition(float x, float y) noexcept { this->x = x; this->y = y; }
 
 	void SetLayerIndex(LayerIndex layerIndex) noexcept;
 	void RemoveLayerIndex() noexcept { this->isInLayer = false; }

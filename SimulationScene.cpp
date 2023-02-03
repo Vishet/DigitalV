@@ -1,10 +1,17 @@
 #include "SimulationScene.h"
 
 #include "Chip.h"
+#include "ToggleSwitch.h"
 
 void SimulationScene::Load()
 {
-	AddObject(Layer::GUI_CHIPS, new Chip(150.0f, 632.5f, L"NAND"));
+	Chip* NANDChip{ new Chip(150.0f, 632.5f, 200.0f, 75.0f, L"NAND") };
+	NANDChip->AddInput(-100.0f, 30.0f);
+	NANDChip->AddInput(-100.0f, -30.0f);
+	AddObject(Layer::GUI_CHIPS, NANDChip);
+
+	ToggleSwitch* toggleSwitch{ new ToggleSwitch(400.0f, 632.5f, 50.0f, 1.0f, 0.0f, 0.0f, 0.5f) };
+	AddObject(Layer::GUI_TOGGLES, toggleSwitch);
 }
 
 void SimulationScene::KeyInput(const Keyboard::Event& keyEvent) noexcept
@@ -59,9 +66,9 @@ Chip* SimulationScene::GetClickedChip(float x, float y) noexcept
 	}
 
 	auto circuitLayer{ GetLayerVector(CIRCUIT) };
-	for (const auto& object : *circuitLayer)
+	for (auto it{ circuitLayer->rbegin() }; it != circuitLayer->rend(); ++it)
 	{
-		auto chip{ dynamic_cast<Chip*>(object) };
+		auto chip{ dynamic_cast<Chip*>(*it) };
 		if (chip->IsColliding(x, y))
 			return chip;
 	}
@@ -77,7 +84,9 @@ void SimulationScene::SelectChip(int mouseX, int mouseY) noexcept
 		if (chip->IsInLayer())
 			MoveObjectLayer(chip->GetLayerIndex(), GetObjectIndex(CIRCUIT, chip), SELECTED_CHIP);
 		else
+		{
 			AddObject(SELECTED_CHIP, chip);
+		}
 	}
 }
 

@@ -1,10 +1,33 @@
 #include "Chip.h"
 #include "Graphics.h"
 
-Chip::Chip(float x, float y, const std::wstring& label) :
+Chip::Chip(float x, float y, float width, float height, const std::wstring& label) :
 	Object(x, y),
-	label{ label }
+	label{ label },
+	width{ width },
+	height{ height }
 {
+}
+
+Chip::Chip(const Chip& chip) :
+	Object(chip)
+{
+	width = chip.width;
+	height = chip.height;
+	label = chip.label;
+	
+	for (auto sourceInput : chip.inputs)
+	{
+		AddInput(sourceInput->GetXOffset(), sourceInput->GetYOffset());
+	}
+}
+
+Chip::~Chip()
+{
+	for (auto input : inputs)
+	{
+		delete input;
+	}
 }
 
 void Chip::Draw()
@@ -23,6 +46,9 @@ void Chip::Draw()
 		GetX() + width / 2, GetY() + height / 2,
 		0.0f, 0.0f, 1.0f
 	);
+
+	for (auto input : inputs)
+		input->Draw();
 }
 
 bool Chip::IsColliding(float x, float y)
@@ -36,4 +62,17 @@ bool Chip::IsColliding(float x, float y)
 		return true;
 	else
 		return false;
+}
+
+void Chip::AddInput(float xOffset, float yOffset) noexcept
+{
+	inputs.push_back(new ChipInput(GetX(), GetY(), xOffset, yOffset));
+}
+
+void Chip::SetPosition(float x, float y) noexcept
+{
+	Object::SetPosition(x, y);
+
+	for (auto input : inputs)
+		input->SetPosition(x, y);
 }
