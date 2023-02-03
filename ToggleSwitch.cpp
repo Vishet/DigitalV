@@ -1,11 +1,12 @@
 #include "ToggleSwitch.h"
 #include "Graphics.h"
+#include "LayersIndexes.h"
 
 ToggleSwitch::ToggleSwitch(
-	float x, float y, 
+	float x, float y,
 	float radius, float strokeWidth,
 	float r, float g, float b, float a) :
-	Object(x, y),
+	Object(x, y, LayerIndex::TOGGLES),
 	radius{ radius }, strokeWidth{ strokeWidth },
 	r{ r }, g{ g }, b{ b }, a{ a }
 {

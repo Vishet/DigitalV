@@ -7,14 +7,6 @@
 class SimulationScene : public Scene
 {
 private:
-	enum Layer {
-		CIRCUIT,
-		PALLETE,
-		GUI,
-		SELECTED_OBJECT
-	};
-
-private:
 	const Mouse* mouse{ Mouse::GetMousePointer() };
 
 public:
@@ -38,11 +30,9 @@ private:
 	void DragSelectedObject() noexcept;
 	void DropSelectedObject() noexcept;
 
-	
 	Object* GetClickedCircuitObject(float x, float y) noexcept;
 	void SelectCircuitObject(int mouseX, int mouseY) noexcept;
-	void DropSelectedChip() noexcept;
-	void DragSelectedChip() noexcept;
-	
+
+	void ToggleSwitches(int mouseX, int mouseY) noexcept;
 };
 

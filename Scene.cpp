@@ -30,27 +30,27 @@ void Scene::Render()
 	}
 }
 
-ObjectIndex Scene::AddObject(Layer layerIndex, Object* object) noexcept
+ObjectIndex Scene::AddObject(LayerIndex layerIndex, Object* object) noexcept
 {
 	layersArray[layerIndex]->push_back(object);
 	object->SetLayerIndex(layerIndex);
 	return layersArray[layerIndex]->size() - 1;
 }
 
-void Scene::DeleteObject(Layer layerIndex, ObjectIndex index) noexcept
+void Scene::DeleteObject(LayerIndex layerIndex, ObjectIndex index) noexcept
 {
 	auto layer{ layersArray[layerIndex] };
 	layer->at(index)->RemoveLayerIndex();
 	layer->erase(layer->begin() + index);
 }
 
-Object* Scene::GetObject(Layer layerIndex, ObjectIndex index) const noexcept
+Object* Scene::GetObject(LayerIndex layerIndex, ObjectIndex index) const noexcept
 {
 	Object* object{ layersArray[layerIndex]->at(index) };
 	return object;
 }
 
-ObjectIndex Scene::GetObjectIndex(Layer layerIndex, const Object* object) const noexcept
+ObjectIndex Scene::GetObjectIndex(LayerIndex layerIndex, const Object* object) const noexcept
 {
 	auto layer{ GetLayerVector(layerIndex) };
 	for(auto it{ layer->begin() }; it != layer->end(); it++)
@@ -66,14 +66,17 @@ ObjectIndex Scene::GetObjectIndex(Layer layerIndex, const Object* object) const 
 	return 0;
 }
 
-ObjectIndex Scene::MoveObjectLayer(Layer srcLayerIndex, ObjectIndex objIndex, Layer destLayerIndex)
+ObjectIndex Scene::MoveObjectLayer(
+	LayerIndex srcLayerIndex, 
+	ObjectIndex objIndex, 
+	LayerIndex destLayerIndex)
 {
 	Object* object{ GetObject(srcLayerIndex, objIndex) };
 	DeleteObject(srcLayerIndex, objIndex);
 	return AddObject(destLayerIndex, object);
 }
 
-const LayerVector* Scene::GetLayerVector(Layer layerIndex) const noexcept
+const LayerVector* Scene::GetLayerVector(LayerIndex layerIndex) const noexcept
 {
 	return layersArray[layerIndex];
 }

@@ -3,6 +3,7 @@
 #include "Object.h"
 #include "Keyboard.h"
 #include "Mouse.h"
+#include "LayersIndexes.h"
 #include <vector>
 #include <array>
 #include <bitset>
@@ -11,7 +12,6 @@ constexpr size_t maxLayers{ 8u };
 
 using LayerVector = std::vector<Object*>;
 using LayersArray = std::array<LayerVector*, maxLayers>;
-using Layer = std::size_t;
 using ObjectIndex = std::size_t;
 
 class Scene
@@ -34,12 +34,12 @@ public:
 	virtual void Update() = 0;
 	virtual void Render();
 
-	ObjectIndex AddObject(Layer layerIndex, Object* object) noexcept;
-	void DeleteObject(Layer layerIndex, ObjectIndex index) noexcept;
-	Object* GetObject(Layer layerIndex, ObjectIndex index) const noexcept;
-	ObjectIndex GetObjectIndex(Layer layerIndex, const Object* object) const noexcept;
-	ObjectIndex MoveObjectLayer(Layer sourceLayer, ObjectIndex index, Layer destinationLayer);
+	ObjectIndex AddObject(LayerIndex layerIndex, Object* object) noexcept;
+	void DeleteObject(LayerIndex layerIndex, ObjectIndex index) noexcept;
+	Object* GetObject(LayerIndex layerIndex, ObjectIndex index) const noexcept;
+	ObjectIndex GetObjectIndex(LayerIndex layerIndex, const Object* object) const noexcept;
+	ObjectIndex MoveObjectLayer(LayerIndex sourceLayer, ObjectIndex index, LayerIndex destinationLayer);
 
-	const LayerVector* GetLayerVector(Layer layerIndex) const noexcept;
+	const LayerVector* GetLayerVector(LayerIndex layerIndex) const noexcept;
 };
 

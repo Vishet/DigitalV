@@ -1,9 +1,10 @@
 #include "ChipInput.h"
 #include "Graphics.h"
 #include "Chip.h"
+#include "LayersIndexes.h"
 
 ChipInput::ChipInput(float chipX, float chipY, float xOffset, float yOffset, bool state) :
-	Object(chipX + xOffset, chipY + yOffset),
+	Object(chipX + xOffset, chipY + yOffset, LayerIndex::NONE),
 	state{ state },
 	xOffset{ xOffset },
 	yOffset{ yOffset }

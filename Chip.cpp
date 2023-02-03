@@ -1,8 +1,9 @@
 #include "Chip.h"
 #include "Graphics.h"
+#include "LayersIndexes.h"
 
 Chip::Chip(float x, float y, float width, float height, const std::wstring& label) :
-	Object(x, y),
+	Object(x, y, LayerIndex::CHIPS),
 	label{ label },
 	width{ width },
 	height{ height }

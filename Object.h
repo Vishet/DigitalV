@@ -1,8 +1,6 @@
 #pragma once
 
-#include <vector> // size_t
-
-using LayerIndex = std::size_t;
+#include "LayersIndexes.h"
 
 class Object
 {
@@ -10,10 +8,11 @@ private:
 	float x;
 	float y;
 	bool isInLayer{ false };
-	LayerIndex currentLayerIndex{ 0 };
+	LayerIndex originalLayerIndex;
+	LayerIndex currentLayerIndex{};
 
 public:
-	Object(float x, float y);
+	Object(float x, float y, LayerIndex originaLayerIndex);
 	Object(const Object& object);
 	virtual Object* Clone() { return new Object(*this); }
 
@@ -35,6 +34,7 @@ public:
 	inline float GetY() const noexcept { return y; }
 
 	inline LayerIndex GetLayerIndex() const noexcept { return this->currentLayerIndex; }
+	inline LayerIndex GetOriginalLayerIndex() const noexcept { return this->originalLayerIndex; }
 	inline bool IsInLayer() const noexcept { return this->isInLayer; }
 };
 
