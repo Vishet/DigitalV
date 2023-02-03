@@ -80,3 +80,34 @@ const LayerVector* Scene::GetLayerVector(LayerIndex layerIndex) const noexcept
 {
 	return layersArray[layerIndex];
 }
+
+Scene::ClickEvent Scene::GetCollidedObject(int x, int y)
+{
+	ClickEvent clickEvent{};
+	clickEvent.mouseX = x;
+	clickEvent.mouseY = y;
+
+	for (auto layerIt{ layersArray.rbegin() }; layerIt != layersArray.rend(); ++layerIt)
+	{
+		LayerVector* layer{ *layerIt };
+		for (auto objectIt{ layer->rbegin() }; objectIt != layer->rend(); ++objectIt)
+		{
+			Object* object{ *objectIt };
+			CollisionType objectCollisionType{ object->IsColliding(
+				static_cast<float>(x), 
+				static_cast<float>(y)
+			) };
+			if (objectCollisionType != CollisionType::NO_COLLISION)
+			{
+				clickEvent.type = objectCollisionType;
+				clickEvent.object = object;
+
+				return clickEvent;
+			}
+		}
+	}
+
+	clickEvent.type = CollisionType::NO_COLLISION;
+	clickEvent.object = nullptr;
+	return clickEvent;
+}

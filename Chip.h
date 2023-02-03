@@ -3,6 +3,7 @@
 #include "Object.h"
 #include "ChipInput.h"
 #include "ChipOutput.h"
+#include "CollisionType.h"
 #include <vector>
 #include <string>
 
@@ -28,7 +29,7 @@ public:
 	Chip operator=(const Chip&&) = delete;
 
 	void Draw() override;
-	bool IsColliding(float x, float y) override;
+	CollisionType IsColliding(float x, float y) override;
 	void AddInput(float xOffset, float yOffset) noexcept;
 	void AddOutput(float xOffset, float yOffset) noexcept;
 	void SetPosition(float x, float y) noexcept override;

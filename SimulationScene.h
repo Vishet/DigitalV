@@ -23,16 +23,13 @@ public:
 	void Update() override;
 
 private:
-	bool IsPointInRect(float x, float y, float recX, float recY, float recX2, float rectY2) const noexcept;
-	
-	Object* GetClickedPalleteObject(int mouseX, int mouseY) noexcept;
-	bool SelectPalleteObject(int mouseX, int mouseY) noexcept;
+	void SelectPalleteObject(Object* palleteObject) noexcept;
 	void DragSelectedObject() noexcept;
 	void DropSelectedObject() noexcept;
 
-	Object* GetClickedCircuitObject(float x, float y) noexcept;
-	void SelectCircuitObject(int mouseX, int mouseY) noexcept;
+	void SelectCircuitObject(Object* circuitObject) noexcept;
 
 	void ToggleSwitches(int mouseX, int mouseY) noexcept;
+	bool SelectWireOutput(int mouseX, int mouseY) noexcept;
 };
 

@@ -27,7 +27,7 @@ public:
 	ToggleSwitch operator=(const ToggleSwitch&) = delete;
 	ToggleSwitch operator=(const ToggleSwitch&&) = delete;
 
-	bool IsColliding(float x, float y) override;
+	CollisionType IsColliding(float x, float y) override;
 	void ToggleState() noexcept;
 	void Draw() override;
 };

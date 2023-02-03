@@ -63,17 +63,38 @@ void Chip::Draw()
 		output->Draw();
 }
 
-bool Chip::IsColliding(float x, float y)
+CollisionType Chip::IsColliding(float x, float y)
 {
+	for (const auto input : inputs)
+	{
+		CollisionType inputCollisionType{ input->IsColliding(x, y) };
+		if (inputCollisionType != CollisionType::NO_COLLISION)
+			return inputCollisionType;
+	}
+
+	for (const auto output : outputs)
+	{
+		CollisionType outputsCollisionType{ output->IsColliding(x, y) };
+		if (outputsCollisionType != CollisionType::NO_COLLISION)
+			return outputsCollisionType;
+	}
+
 	if (
 		x >= GetX() - width / 2 &&
 		x <= GetX() + width / 2 &&
 		y >= GetY() - height / 2 &&
 		y <= GetY() + height / 2
 		)
-		return true;
+	{
+		if (GetLayerIndex() == LayerIndex::CHIPS)
+			return CollisionType::CHIP;
+		else if (GetLayerIndex() == LayerIndex::PALLETE)
+			return CollisionType::PALLETE;
+		else
+			return CollisionType::NO_COLLISION;
+	}
 	else
-		return false;
+		return CollisionType::NO_COLLISION;
 }
 
 void Chip::AddInput(float xOffset, float yOffset) noexcept

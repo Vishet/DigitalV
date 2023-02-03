@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Object.h"
+#include "CollisionType.h"
 
 class ChipOutput : public Object
 {
@@ -31,4 +32,5 @@ public:
 	void SetState(bool state) noexcept;
 	void Draw() override;
 	void SetPosition(float x, float y) noexcept override;
+	CollisionType IsColliding(float x, float y) override;
 };

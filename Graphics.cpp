@@ -84,14 +84,19 @@ void Graphics::Fill(float r, float g, float b, float a) const noexcept
 	pRenderTarget->Clear(D2D1::ColorF(r, g, b, a));
 }
 
-void Graphics::DrawLine(const D2D1_POINT_2F& pointA, const D2D1_POINT_2F& pointB, const D2D1_COLOR_F& color, float strokeWidth) const
+void Graphics::DrawLine(
+	float x, float y,
+	float x1, float y1,
+	float strokeWidth,
+	float r, float g, float b, float a
+) const
 {
 	CComPtr<ID2D1SolidColorBrush> pBrush{};
 
 	HRESULT hr{};
-	THROW_IF_FAILED_HR(pRenderTarget->CreateSolidColorBrush(color, &pBrush));
+	THROW_IF_FAILED_HR(pRenderTarget->CreateSolidColorBrush(D2D1::ColorF(r, g, b, a), &pBrush));
 
-	pRenderTarget->DrawLine(pointA, pointB, pBrush, strokeWidth);
+	pRenderTarget->DrawLine(D2D1::Point2F(x, y), D2D1::Point2F(x1, y1), pBrush, strokeWidth);
 }
 
 void Graphics::FillRectangle(

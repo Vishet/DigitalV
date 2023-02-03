@@ -34,3 +34,12 @@ void ChipInput::SetPosition(float x, float y) noexcept
 {
 	Object::SetPosition(x + xOffset, y + yOffset);
 }
+
+CollisionType ChipInput::IsColliding(float x, float y)
+{
+	float distance = static_cast<float>(sqrt(pow(GetX() - x, 2) + pow(GetY() - y, 2)));
+	if (distance <= radius)
+		return CollisionType::CHIPINPUT;
+	else
+		return CollisionType::NO_COLLISION;
+}

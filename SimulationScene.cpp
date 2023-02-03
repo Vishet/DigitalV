@@ -33,23 +33,49 @@ void SimulationScene::MouseInput(const Mouse::Event& mouseEvent) noexcept
 
 	case Mouse::Event::Type::LMBPressed:
 	{
-		if (SelectPalleteObject(mouseX, mouseY)) break;
-		SelectCircuitObject(mouseX, mouseY);
-		break;
+		ClickEvent clickEvent{ GetCollidedObject(mouseX, mouseY) };
+		switch (clickEvent.type)
+		{
+
+		case CollisionType::PALLETE:
+		{
+			SelectPalleteObject(clickEvent.object);
+			break;
+		}
+
+		case CollisionType::TOGGLE:
+		case CollisionType::CHIP:
+		{
+			SelectCircuitObject(clickEvent.object);
+			break;
+		}
+
+		}
+			break;
 	}
 
-	case Mouse::Event::Type::LMBReleased:
-	{
-		DropSelectedObject();
-		break;
-	}
+		case Mouse::Event::Type::LMBReleased:
+		{
+			DropSelectedObject();
+			break;
+		}
 
-	case Mouse::Event::Type::RMBPressed:
-	{
-		ToggleSwitches(mouseX, mouseY);
-		break;
-	}
+		case Mouse::Event::Type::RMBPressed:
+		{
+			ClickEvent clickEvent{ GetCollidedObject(mouseX, mouseY) };
+			switch (clickEvent.type)
+			{
 
+			case CollisionType::TOGGLE:
+			{
+				ToggleSwitches(mouseX, mouseY);
+				break;
+			}
+
+			}
+			
+			break;
+		}
 	}
 }
 
@@ -61,49 +87,9 @@ void SimulationScene::Update()
 	}
 }
 
-bool SimulationScene::IsPointInRect(
-	float x, float y, 
-	float rectX, float rectY, float rectX2, float rectY2
-) const noexcept
+void SimulationScene::SelectPalleteObject(Object* palleteObject) noexcept
 {
-	if (x >= rectX && x <= rectX2 && y >= rectY && y <= rectY2)
-		return true;
-	else
-		return false;
-}
-
-Object* SimulationScene::GetClickedPalleteObject(int mouseX, int mouseY) noexcept
-{
-	auto palleteLayer{ GetLayerVector(PALLETE) };
-	for (const auto& palleteObject : *palleteLayer)
-	{
-		if (palleteObject->IsColliding(
-				static_cast<float>(mouseX), 
-				static_cast<float>(mouseY)
-			)
-		)
-			return palleteObject->Clone();
-	}
-
-	return nullptr;
-}
-
-bool SimulationScene::SelectPalleteObject(int mouseX, int mouseY) noexcept
-{
-	Object* palleteObject{
-		GetClickedPalleteObject(
-			mouseX,
-			mouseY
-		)
-	};
-
-	if (palleteObject)
-	{
-		AddObject(SELECTED_OBJECT, palleteObject);
-		return true;
-	}
-	else
-		return false;
+	AddObject(SELECTED_OBJECT, palleteObject->Clone());
 }
 
 void SimulationScene::DragSelectedObject() noexcept
@@ -130,39 +116,14 @@ void SimulationScene::DropSelectedObject() noexcept
 	}
 }
 
-
-Object* SimulationScene::GetClickedCircuitObject(float x, float y) noexcept
+void SimulationScene::SelectCircuitObject(Object* circuitObject) noexcept
 {
-	auto chipsLayer{ GetLayerVector(LayerIndex::CHIPS) };
-	auto togglesLayer{ GetLayerVector(LayerIndex::TOGGLES) };
-
-	LayerVector allCircuitLayers{};
-	allCircuitLayers.reserve(chipsLayer->size() + togglesLayer->size());
-	allCircuitLayers.insert(allCircuitLayers.end(), chipsLayer->begin(), chipsLayer->end());
-	allCircuitLayers.insert(allCircuitLayers.end(), togglesLayer->begin(), togglesLayer->end());
-
-	for (auto it{ allCircuitLayers.rbegin() }; it != allCircuitLayers.rend(); ++it)
-	{
-		auto object{ dynamic_cast<Object*>(*it) };
-		if (object->IsColliding(x, y))
-			return object;
-	}
-
-	return nullptr;
-}
-
-void SimulationScene::SelectCircuitObject(int mouseX, int mouseY) noexcept
-{
-	Object* object{ GetClickedCircuitObject(static_cast<float>(mouseX), static_cast<float>(mouseY)) };
-	if (object)
-	{
-		LayerIndex objectLayerIndex{ object->GetLayerIndex() };
-		MoveObjectLayer(
-			object->GetLayerIndex(), 
-			GetObjectIndex(objectLayerIndex, object), 
-			LayerIndex::SELECTED_OBJECT
-		);
-	}
+	LayerIndex objectLayerIndex{ circuitObject->GetLayerIndex() };
+	MoveObjectLayer(
+		circuitObject->GetLayerIndex(),
+		GetObjectIndex(objectLayerIndex, circuitObject),
+		LayerIndex::SELECTED_OBJECT
+	);
 }
 
 void SimulationScene::ToggleSwitches(int mouseX, int mouseY) noexcept
@@ -172,7 +133,10 @@ void SimulationScene::ToggleSwitches(int mouseX, int mouseY) noexcept
 	for (auto it{ togglesLayer->rbegin() }; it != togglesLayer->rend(); ++it)
 	{
 		ToggleSwitch* toggleSwitch{ dynamic_cast<ToggleSwitch*>(*it) };
-		if (toggleSwitch->IsColliding(static_cast<float>(mouseX), static_cast<float>(mouseY)))
+		if (toggleSwitch->IsColliding(
+			static_cast<float>(mouseX), 
+			static_cast<float>(mouseY)
+		) != CollisionType::NO_COLLISION )
 		{
 			toggleSwitch->ToggleState();
 			break;

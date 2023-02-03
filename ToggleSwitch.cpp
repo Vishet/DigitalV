@@ -23,10 +23,20 @@ ToggleSwitch::ToggleSwitch(const ToggleSwitch& toggleSwitch) :
 	a = toggleSwitch.a;
 }
 
-bool ToggleSwitch::IsColliding(float x, float y)
+CollisionType ToggleSwitch::IsColliding(float x, float y)
 {
 	float distance = static_cast<float>(sqrt(pow(GetX() - x, 2) + pow(GetY() - y, 2)));
-	return (distance <= radius);
+	if (distance <= radius)
+	{
+		if (GetLayerIndex() == LayerIndex::TOGGLES)
+			return CollisionType::TOGGLE;
+		else if (GetLayerIndex() == LayerIndex::PALLETE)
+			return CollisionType::PALLETE;
+		else
+			return CollisionType::NO_COLLISION;
+	}
+	else
+		return CollisionType::NO_COLLISION;
 }
 
 void ToggleSwitch::ToggleState() noexcept

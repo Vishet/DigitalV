@@ -147,12 +147,14 @@
     <ClCompile Include="SceneManager.cpp" />
     <ClCompile Include="SimulationScene.cpp" />
     <ClCompile Include="ToggleSwitch.cpp" />
+    <ClCompile Include="Wire.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="App.h" />
     <ClInclude Include="Chip.h" />
     <ClInclude Include="ChipInput.h" />
     <ClInclude Include="ChipOutput.h" />
+    <ClInclude Include="CollisionType.h" />
     <ClInclude Include="Exception.h" />
     <ClInclude Include="GenericWindow.h" />
     <ClInclude Include="Graphics.h" />
@@ -165,6 +167,7 @@
     <ClInclude Include="SceneManager.h" />
     <ClInclude Include="SimulationScene.h" />
     <ClInclude Include="ToggleSwitch.h" />
+    <ClInclude Include="Wire.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

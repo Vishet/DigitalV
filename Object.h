@@ -1,6 +1,7 @@
 #pragma once
 
 #include "LayersIndexes.h"
+#include "CollisionType.h"
 
 class Object
 {
@@ -21,7 +22,7 @@ public:
 	Object operator=(const Object&&) = delete;
 
 	virtual void Draw() {}
-	virtual bool IsColliding(float x, float y) { return false; }
+	virtual CollisionType IsColliding(float x, float y) { return CollisionType::NO_COLLISION; }
 
 	inline void SetX(float x) noexcept { this->x = x; }
 	inline void SetY(float y) noexcept { this->y = y; }

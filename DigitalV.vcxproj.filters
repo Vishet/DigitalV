@@ -43,6 +43,18 @@
     <Filter Include="Header Files\Windows">
       <UniqueIdentifier>{8ab74655-7b1b-42de-8d2b-f2d34435bf43}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Engine\Source">
+      <UniqueIdentifier>{cccaff21-1144-4255-8f26-539d05f0db42}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Engine\Configurable">
+      <UniqueIdentifier>{268550a6-bba3-4928-a331-da7a25edb002}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Engine\Source">
+      <UniqueIdentifier>{20e6d379-c169-40f1-8eee-c65c506a5b3e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Engine\Configurable">
+      <UniqueIdentifier>{ed6c1322-41b6-4b05-aee0-cdcb376abff8}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Mouse.cpp">
@@ -56,27 +68,6 @@
     </ClCompile>
     <ClCompile Include="SimulationScene.cpp">
       <Filter>Source Files\Scenes</Filter>
-    </ClCompile>
-    <ClCompile Include="App.cpp">
-      <Filter>Source Files\Engine</Filter>
-    </ClCompile>
-    <ClCompile Include="Exception.cpp">
-      <Filter>Source Files\Engine</Filter>
-    </ClCompile>
-    <ClCompile Include="GenericWindow.cpp">
-      <Filter>Source Files\Engine</Filter>
-    </ClCompile>
-    <ClCompile Include="Graphics.cpp">
-      <Filter>Source Files\Engine</Filter>
-    </ClCompile>
-    <ClCompile Include="Object.cpp">
-      <Filter>Source Files\Engine</Filter>
-    </ClCompile>
-    <ClCompile Include="Scene.cpp">
-      <Filter>Source Files\Engine</Filter>
-    </ClCompile>
-    <ClCompile Include="SceneManager.cpp">
-      <Filter>Source Files\Engine</Filter>
     </ClCompile>
     <ClCompile Include="MainWindow.cpp">
       <Filter>Source Files\Windows</Filter>
@@ -93,6 +84,30 @@
     <ClCompile Include="ChipOutput.cpp">
       <Filter>Source Files\Objects</Filter>
     </ClCompile>
+    <ClCompile Include="Wire.cpp">
+      <Filter>Source Files\Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="Exception.cpp">
+      <Filter>Source Files\Engine\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="GenericWindow.cpp">
+      <Filter>Source Files\Engine\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Graphics.cpp">
+      <Filter>Source Files\Engine\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Object.cpp">
+      <Filter>Source Files\Engine\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Scene.cpp">
+      <Filter>Source Files\Engine\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="SceneManager.cpp">
+      <Filter>Source Files\Engine\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="App.cpp">
+      <Filter>Source Files\Engine\Configurable</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Keyboard.h">
@@ -107,27 +122,6 @@
     <ClInclude Include="SimulationScene.h">
       <Filter>Header Files\Scenes</Filter>
     </ClInclude>
-    <ClInclude Include="App.h">
-      <Filter>Header Files\Engine</Filter>
-    </ClInclude>
-    <ClInclude Include="Exception.h">
-      <Filter>Header Files\Engine</Filter>
-    </ClInclude>
-    <ClInclude Include="GenericWindow.h">
-      <Filter>Header Files\Engine</Filter>
-    </ClInclude>
-    <ClInclude Include="Graphics.h">
-      <Filter>Header Files\Engine</Filter>
-    </ClInclude>
-    <ClInclude Include="Object.h">
-      <Filter>Header Files\Engine</Filter>
-    </ClInclude>
-    <ClInclude Include="Scene.h">
-      <Filter>Header Files\Engine</Filter>
-    </ClInclude>
-    <ClInclude Include="SceneManager.h">
-      <Filter>Header Files\Engine</Filter>
-    </ClInclude>
     <ClInclude Include="MainWindow.h">
       <Filter>Header Files\Windows</Filter>
     </ClInclude>
@@ -137,11 +131,38 @@
     <ClInclude Include="ToggleSwitch.h">
       <Filter>Header Files\Objects</Filter>
     </ClInclude>
-    <ClInclude Include="LayersIndexes.h">
-      <Filter>Header Files\Scenes</Filter>
-    </ClInclude>
     <ClInclude Include="ChipOutput.h">
       <Filter>Header Files\Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="Wire.h">
+      <Filter>Header Files\Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="Exception.h">
+      <Filter>Header Files\Engine\Source</Filter>
+    </ClInclude>
+    <ClInclude Include="GenericWindow.h">
+      <Filter>Header Files\Engine\Source</Filter>
+    </ClInclude>
+    <ClInclude Include="Graphics.h">
+      <Filter>Header Files\Engine\Source</Filter>
+    </ClInclude>
+    <ClInclude Include="Object.h">
+      <Filter>Header Files\Engine\Source</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene.h">
+      <Filter>Header Files\Engine\Source</Filter>
+    </ClInclude>
+    <ClInclude Include="SceneManager.h">
+      <Filter>Header Files\Engine\Source</Filter>
+    </ClInclude>
+    <ClInclude Include="App.h">
+      <Filter>Header Files\Engine\Configurable</Filter>
+    </ClInclude>
+    <ClInclude Include="CollisionType.h">
+      <Filter>Header Files\Engine\Configurable</Filter>
+    </ClInclude>
+    <ClInclude Include="LayersIndexes.h">
+      <Filter>Header Files\Engine\Configurable</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

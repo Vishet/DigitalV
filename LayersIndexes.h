@@ -2,6 +2,7 @@
 
 enum LayerIndex {
 	NONE,
+	WIRES,
 	CHIPS,
 	TOGGLES,
 	PALLETE,

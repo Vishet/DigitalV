@@ -47,7 +47,12 @@ public:
 
 	void Fill(float r, float g, float b, float a) const noexcept;
 
-	void DrawLine(const D2D1_POINT_2F& pointA, const D2D1_POINT_2F& pointB, const D2D1_COLOR_F& color, float strokeWidth) const;
+	void DrawLine(
+		float x, float y,
+		float x1, float y1,
+		float strokeWidth,
+		float r, float g, float b, float a = 1.0f
+	) const;
 	void FillRectangle(
 		float x, float y, float x2, float y2,
 		float r, float g, float b, float a = 1.0f
