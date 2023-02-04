@@ -12,11 +12,19 @@ ChipInput::ChipInput(float chipX, float chipY, float xOffset, float yOffset, boo
 }
 
 ChipInput::ChipInput(const ChipInput& chipInput)  :
-	Object(chipInput)
+	Object(chipInput),
+	state{ chipInput.state },
+	xOffset{ chipInput.xOffset },
+	yOffset{ chipInput.yOffset }
 {
-	state = chipInput.state;
-	xOffset = chipInput.xOffset;
-	yOffset = chipInput.yOffset;
+}
+
+ChipInput::ChipInput(const ChipInput&& chipInput) :
+	Object(std::move(chipInput)),
+	state{ chipInput.state },
+	xOffset{ chipInput.xOffset },
+	yOffset{ chipInput.yOffset }
+{
 }
 
 void ChipInput::SetState(bool state) noexcept
@@ -24,7 +32,7 @@ void ChipInput::SetState(bool state) noexcept
 	this->state = state;
 }
 
-void ChipInput::Draw()
+void ChipInput::Draw() const
 {
 	Graphics* graphics{ Graphics::GetGraphicsPointer() };
 	graphics->FillCircle(GetX(), GetY(), radius, r, g, b);
@@ -33,13 +41,17 @@ void ChipInput::Draw()
 void ChipInput::SetPosition(float x, float y) noexcept
 {
 	Object::SetPosition(x + xOffset, y + yOffset);
+	if(connectedWire)
+		connectedWire->SetPosition(GetX(), GetY());
 }
 
-CollisionType ChipInput::IsColliding(float x, float y)
+Collision ChipInput::IsColliding(float x, float y)
 {
+	Collision collision{ x, y, CollisionType::NO_COLLISION, this };
+
 	float distance = static_cast<float>(sqrt(pow(GetX() - x, 2) + pow(GetY() - y, 2)));
 	if (distance <= radius)
-		return CollisionType::CHIPINPUT;
-	else
-		return CollisionType::NO_COLLISION;
+		collision.type = CollisionType::CHIPINPUT;
+
+	return collision;
 }

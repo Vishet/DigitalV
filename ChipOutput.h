@@ -2,6 +2,7 @@
 
 #include "Object.h"
 #include "CollisionType.h"
+#include "Wire.h"
 
 class ChipOutput : public Object
 {
@@ -13,6 +14,7 @@ private:
 	static constexpr float r{ 0.0f };
 	static constexpr float g{ 0.0f };
 	static constexpr float b{ 0.5f };
+	Wire* connectedWire{};
 
 public:
 	ChipOutput(
@@ -21,8 +23,8 @@ public:
 		bool state = false
 	);
 	ChipOutput(const ChipOutput& chipOutput);
+	ChipOutput(const ChipOutput&& ChipOutput);
 
-	ChipOutput(const ChipOutput&&) = delete;
 	ChipOutput operator=(const ChipOutput&) = delete;
 	ChipOutput operator=(const ChipOutput&&) = delete;
 
@@ -30,7 +32,9 @@ public:
 	float GetYOffset() const noexcept { return yOffset; }
 
 	void SetState(bool state) noexcept;
-	void Draw() override;
+	void Draw() const override;
 	void SetPosition(float x, float y) noexcept override;
-	CollisionType IsColliding(float x, float y) override;
+	Collision IsColliding(float x, float y) override;
+	inline void ConnectWire(Wire* wire) noexcept { this->connectedWire = wire; }
+	inline Wire* GetConnectedWire() const noexcept { return this->connectedWire; }
 };

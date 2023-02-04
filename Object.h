@@ -2,6 +2,7 @@
 
 #include "LayersIndexes.h"
 #include "CollisionType.h"
+#include "Collision.h"
 
 class Object
 {
@@ -15,14 +16,14 @@ private:
 public:
 	Object(float x, float y, LayerIndex originaLayerIndex);
 	Object(const Object& object);
+	Object(const Object&& object);
 	virtual Object* Clone() { return new Object(*this); }
 
-	Object(const Object&&) = delete;
 	Object operator=(const Object&) = delete;
 	Object operator=(const Object&&) = delete;
 
-	virtual void Draw() {}
-	virtual CollisionType IsColliding(float x, float y) { return CollisionType::NO_COLLISION; }
+	virtual void Draw() const {}
+	virtual Collision IsColliding(float x, float y) { return Collision(); }
 
 	inline void SetX(float x) noexcept { this->x = x; }
 	inline void SetY(float y) noexcept { this->y = y; }

@@ -17,29 +17,21 @@ Chip::Chip(const Chip& chip) :
 	height = chip.height;
 	label = chip.label;
 	
-	for (auto sourceInput : chip.inputs)
+	for (const auto& sourceInput : chip.inputs)
 	{
-		AddInput(sourceInput->GetXOffset(), sourceInput->GetYOffset());
+		AddInput(sourceInput.GetXOffset(), sourceInput.GetYOffset());
 	}
-	for (auto sourceOutput : chip.outputs)
+	for (const auto& sourceOutput : chip.outputs)
 	{
-		AddInput(sourceOutput->GetXOffset(), sourceOutput->GetYOffset());
+		AddInput(sourceOutput.GetXOffset(), sourceOutput.GetYOffset());
 	}
 }
 
 Chip::~Chip()
 {
-	for (auto input : inputs)
-	{
-		delete input;
-	}
-	for (auto output : outputs)
-	{
-		delete output;
-	}
 }
 
-void Chip::Draw()
+void Chip::Draw() const
 {
 	auto graphics{ Graphics::GetGraphicsPointer() };
 
@@ -56,27 +48,29 @@ void Chip::Draw()
 		0.0f, 0.0f, 1.0f
 	);
 
-	for (auto input : inputs)
-		input->Draw();
+	for (const auto& input : inputs)
+		input.Draw();
 
-	for (auto output : outputs)
-		output->Draw();
+	for (const auto& output : outputs)
+		output.Draw();
 }
 
-CollisionType Chip::IsColliding(float x, float y)
+Collision Chip::IsColliding(float x, float y)
 {
-	for (const auto input : inputs)
+	Collision collision{x, y, CollisionType::NO_COLLISION, this};
+
+	for (auto& input : inputs)
 	{
-		CollisionType inputCollisionType{ input->IsColliding(x, y) };
-		if (inputCollisionType != CollisionType::NO_COLLISION)
-			return inputCollisionType;
+		Collision inputCollision{ input.IsColliding(x, y) };
+		if (inputCollision.type != CollisionType::NO_COLLISION)
+			return inputCollision;
 	}
 
-	for (const auto output : outputs)
+	for (auto& output : outputs)
 	{
-		CollisionType outputsCollisionType{ output->IsColliding(x, y) };
-		if (outputsCollisionType != CollisionType::NO_COLLISION)
-			return outputsCollisionType;
+		Collision outputCollision{ output.IsColliding(x, y) };
+		if (outputCollision.type != CollisionType::NO_COLLISION)
+			return outputCollision;
 	}
 
 	if (
@@ -87,32 +81,30 @@ CollisionType Chip::IsColliding(float x, float y)
 		)
 	{
 		if (GetLayerIndex() == LayerIndex::CHIPS)
-			return CollisionType::CHIP;
+			collision.type = CollisionType::CHIP;
 		else if (GetLayerIndex() == LayerIndex::PALLETE)
-			return CollisionType::PALLETE;
-		else
-			return CollisionType::NO_COLLISION;
+			collision.type = CollisionType::PALLETE;
 	}
-	else
-		return CollisionType::NO_COLLISION;
+
+	return collision;
 }
 
 void Chip::AddInput(float xOffset, float yOffset) noexcept
 {
-	inputs.push_back(new ChipInput(GetX(), GetY(), xOffset, yOffset));
+	inputs.emplace_back(ChipInput(GetX(), GetY(), xOffset, yOffset));
 }
 
 void Chip::AddOutput(float xOffset, float yOffset) noexcept
 {
-	outputs.push_back(new ChipOutput(GetX(), GetY(), xOffset, yOffset));
+	outputs.emplace_back(ChipOutput(GetX(), GetY(), xOffset, yOffset));
 }
 
 void Chip::SetPosition(float x, float y) noexcept
 {
 	Object::SetPosition(x, y);
 
-	for (auto input : inputs)
-		input->SetPosition(x, y);
+	for (auto& input : inputs)
+		input.SetPosition(x, y);
 	for (auto output : outputs)
-		output->SetPosition(x, y);
+		output.SetPosition(x, y);
 }

@@ -1,7 +1,8 @@
 #pragma once
 
 #include "Object.h"
-#include "CollisionType.h"
+#include "Collision.h"
+#include "Wire.h"
 
 class ChipInput : public Object
 {
@@ -13,6 +14,7 @@ private:
 	static constexpr float r{ 0.0f };
 	static constexpr float g{ 0.0f };
 	static constexpr float b{ 0.5f };
+	Wire* connectedWire{};
 
 public:
 	ChipInput(
@@ -21,8 +23,8 @@ public:
 		bool state = false
 	);
 	ChipInput(const ChipInput& chipInput);
+	ChipInput(const ChipInput&& chipInput);
 
-	ChipInput(const ChipInput&&) = delete;
 	ChipInput operator=(const ChipInput&) = delete;
 	ChipInput operator=(const ChipInput&&) = delete;
 
@@ -30,8 +32,9 @@ public:
 	float GetYOffset() const noexcept { return yOffset; }
 
 	void SetState(bool state) noexcept;
-	void Draw() override;
+	void Draw() const override;
 	void SetPosition(float x, float y) noexcept override;
-	CollisionType IsColliding(float x, float y) override;
+	Collision IsColliding(float x, float y) override;
+	inline void ConnectWire(Wire* wire) noexcept { this->connectedWire = wire; }
 };
 

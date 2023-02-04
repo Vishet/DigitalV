@@ -4,7 +4,7 @@
 #include "Keyboard.h"
 #include "Mouse.h"
 #include "LayersIndexes.h"
-#include "CollisionType.h"
+#include "Collision.h"
 #include <vector>
 #include <array>
 #include <bitset>
@@ -17,15 +17,6 @@ using ObjectIndex = std::size_t;
 
 class Scene
 {
-public:
-	struct ClickEvent
-	{
-		CollisionType type;
-		int mouseX;
-		int mouseY;
-		Object* object;
-	};
-
 private:
 	std::array<LayerVector*, maxLayers> layersArray{};
 
@@ -46,11 +37,12 @@ public:
 
 	ObjectIndex AddObject(LayerIndex layerIndex, Object* object) noexcept;
 	void DeleteObject(LayerIndex layerIndex, ObjectIndex index) noexcept;
+	void DeleteObject(Object*) noexcept;
 	Object* GetObject(LayerIndex layerIndex, ObjectIndex index) const noexcept;
 	ObjectIndex GetObjectIndex(LayerIndex layerIndex, const Object* object) const noexcept;
 	ObjectIndex MoveObjectLayer(LayerIndex sourceLayer, ObjectIndex index, LayerIndex destinationLayer);
 	const LayerVector* GetLayerVector(LayerIndex layerIndex) const noexcept;
 
-	ClickEvent GetCollidedObject(int x, int y);
+	Collision GetCollidedObject(int x, int y);
 };
 

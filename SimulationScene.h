@@ -3,6 +3,7 @@
 #include "Scene.h"
 #include "Chip.h"
 #include "Mouse.h"
+#include "Wire.h"
 
 class SimulationScene : public Scene
 {
@@ -23,13 +24,15 @@ public:
 	void Update() override;
 
 private:
+	Object* GetSelectedObject() const noexcept;
+
 	void SelectPalleteObject(Object* palleteObject) noexcept;
 	void DragSelectedObject() noexcept;
 	void DropSelectedObject() noexcept;
 
 	void SelectCircuitObject(Object* circuitObject) noexcept;
 
-	void ToggleSwitches(int mouseX, int mouseY) noexcept;
-	bool SelectWireOutput(int mouseX, int mouseY) noexcept;
+	void AddWire(ChipOutput* output) noexcept;
+	void DropSelectedWire(Wire* selectedWire, ChipInput* chipInput) noexcept;
 };
 

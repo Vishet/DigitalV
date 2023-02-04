@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Object.h"
+#include "ChipOutput.h"
 
 class ToggleSwitch : public Object
 {
@@ -12,6 +13,8 @@ private:
 	float g;
 	float b;
 	float a;
+	static constexpr float lineWidth{ 25.0f };
+	ChipOutput output;
 
 public:
 	ToggleSwitch(
@@ -21,13 +24,15 @@ public:
 	);
 	ToggleSwitch(const ToggleSwitch& toggleSwitch);
 
-	Object* Clone() override { return new ToggleSwitch(GetX(), GetY(), radius, strokeWidth, r, g, b, a); }
+	Object* Clone() override { return new ToggleSwitch(*this); }
 
 	ToggleSwitch(const ToggleSwitch&&) = delete;
 	ToggleSwitch operator=(const ToggleSwitch&) = delete;
 	ToggleSwitch operator=(const ToggleSwitch&&) = delete;
 
-	CollisionType IsColliding(float x, float y) override;
+	Collision IsColliding(float x, float y) override;
 	void ToggleState() noexcept;
-	void Draw() override;
+	void Draw() const override;
+	void SetPosition(float x, float y) noexcept override;
+	ChipOutput* GetOutputPointer() noexcept { return &output; }
 };

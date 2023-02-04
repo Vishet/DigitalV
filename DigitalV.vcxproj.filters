@@ -164,5 +164,8 @@
     <ClInclude Include="LayersIndexes.h">
       <Filter>Header Files\Engine\Configurable</Filter>
     </ClInclude>
+    <ClInclude Include="Collision.h">
+      <Filter>Header Files\Engine\Source</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

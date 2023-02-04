@@ -44,10 +44,22 @@ void Scene::DeleteObject(LayerIndex layerIndex, ObjectIndex index) noexcept
 	layer->erase(layer->begin() + index);
 }
 
+void Scene::DeleteObject(Object* object) noexcept
+{
+	auto layerIndex{ object->GetLayerIndex() };
+	DeleteObject(layerIndex, GetObjectIndex(layerIndex, object));
+}
+
 Object* Scene::GetObject(LayerIndex layerIndex, ObjectIndex index) const noexcept
 {
-	Object* object{ layersArray[layerIndex]->at(index) };
-	return object;
+	auto layer{ GetLayerVector(layerIndex) };
+	if (!layer->empty())
+	{
+		Object* object{ layersArray[layerIndex]->at(index) };
+		return object;
+	}
+	else
+		return nullptr;
 }
 
 ObjectIndex Scene::GetObjectIndex(LayerIndex layerIndex, const Object* object) const noexcept
@@ -72,8 +84,13 @@ ObjectIndex Scene::MoveObjectLayer(
 	LayerIndex destLayerIndex)
 {
 	Object* object{ GetObject(srcLayerIndex, objIndex) };
-	DeleteObject(srcLayerIndex, objIndex);
-	return AddObject(destLayerIndex, object);
+	if (object)
+	{
+		DeleteObject(srcLayerIndex, objIndex);
+		return AddObject(destLayerIndex, object);
+	}
+	else
+		return 0;
 }
 
 const LayerVector* Scene::GetLayerVector(LayerIndex layerIndex) const noexcept
@@ -81,33 +98,22 @@ const LayerVector* Scene::GetLayerVector(LayerIndex layerIndex) const noexcept
 	return layersArray[layerIndex];
 }
 
-Scene::ClickEvent Scene::GetCollidedObject(int x, int y)
+Collision Scene::GetCollidedObject(int x, int y)
 {
-	ClickEvent clickEvent{};
-	clickEvent.mouseX = x;
-	clickEvent.mouseY = y;
-
 	for (auto layerIt{ layersArray.rbegin() }; layerIt != layersArray.rend(); ++layerIt)
 	{
 		LayerVector* layer{ *layerIt };
 		for (auto objectIt{ layer->rbegin() }; objectIt != layer->rend(); ++objectIt)
 		{
 			Object* object{ *objectIt };
-			CollisionType objectCollisionType{ object->IsColliding(
+			Collision collision{ object->IsColliding(
 				static_cast<float>(x), 
 				static_cast<float>(y)
 			) };
-			if (objectCollisionType != CollisionType::NO_COLLISION)
-			{
-				clickEvent.type = objectCollisionType;
-				clickEvent.object = object;
-
-				return clickEvent;
-			}
+			if (collision.type != CollisionType::NO_COLLISION)
+				return collision;
 		}
 	}
 
-	clickEvent.type = CollisionType::NO_COLLISION;
-	clickEvent.object = nullptr;
-	return clickEvent;
+	return Collision{};
 }

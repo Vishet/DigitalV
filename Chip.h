@@ -15,8 +15,8 @@ private:
 	float width;
 	float height;
 	std::wstring label;
-	std::vector<ChipInput*> inputs{};
-	std::vector<ChipOutput*> outputs{};
+	std::vector<ChipInput> inputs{};
+	std::vector<ChipOutput> outputs{};
 
 public:
 	Chip(float x, float y, float width, float height, const std::wstring& label);
@@ -28,8 +28,8 @@ public:
 	Chip operator=(const Chip&) = delete;
 	Chip operator=(const Chip&&) = delete;
 
-	void Draw() override;
-	CollisionType IsColliding(float x, float y) override;
+	void Draw() const override;
+	Collision IsColliding(float x, float y) override;
 	void AddInput(float xOffset, float yOffset) noexcept;
 	void AddOutput(float xOffset, float yOffset) noexcept;
 	void SetPosition(float x, float y) noexcept override;
