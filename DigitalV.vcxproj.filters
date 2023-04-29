@@ -9,10 +9,6 @@
       <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
       <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
     </Filter>
-    <Filter Include="Resource Files">
-      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
-      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
-    </Filter>
     <Filter Include="Header Files\Scenes">
       <UniqueIdentifier>{b56b3245-c4b9-4758-b2e9-320c8c2fb414}</UniqueIdentifier>
     </Filter>
@@ -54,6 +50,18 @@
     </Filter>
     <Filter Include="Source Files\Engine\Configurable">
       <UniqueIdentifier>{ed6c1322-41b6-4b05-aee0-cdcb376abff8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\GUIS">
+      <UniqueIdentifier>{1868e366-1752-47a2-8547-972076ae8cf2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\GUIS">
+      <UniqueIdentifier>{2ffdb363-96f3-42df-922a-6921b04e87c7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\GUIS\Items">
+      <UniqueIdentifier>{c61424a1-5cfd-4687-8d3d-8e7c45d7d03f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\GUIS\Items">
+      <UniqueIdentifier>{9764dd67-00f0-4924-877b-779ea99e72ea}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -102,11 +110,26 @@
     <ClCompile Include="Scene.cpp">
       <Filter>Source Files\Engine\Source</Filter>
     </ClCompile>
-    <ClCompile Include="SceneManager.cpp">
-      <Filter>Source Files\Engine\Source</Filter>
-    </ClCompile>
     <ClCompile Include="App.cpp">
       <Filter>Source Files\Engine\Configurable</Filter>
+    </ClCompile>
+    <ClCompile Include="NANDChip.cpp">
+      <Filter>Source Files\Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="GUI.cpp">
+      <Filter>Source Files\Engine\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="SceneManager.cpp">
+      <Filter>Source Files\Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="GUIItem.cpp">
+      <Filter>Source Files\Engine\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="ChipPalleteGUI.cpp">
+      <Filter>Source Files\GUIS</Filter>
+    </ClCompile>
+    <ClCompile Include="NANDChipItem.cpp">
+      <Filter>Source Files\GUIS\Items</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -166,6 +189,21 @@
     </ClInclude>
     <ClInclude Include="Collision.h">
       <Filter>Header Files\Engine\Source</Filter>
+    </ClInclude>
+    <ClInclude Include="NANDChip.h">
+      <Filter>Header Files\Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="GUI.h">
+      <Filter>Header Files\Engine\Source</Filter>
+    </ClInclude>
+    <ClInclude Include="GUIItem.h">
+      <Filter>Header Files\Engine\Source</Filter>
+    </ClInclude>
+    <ClInclude Include="ChipPalleteGUI.h">
+      <Filter>Header Files\GUIS</Filter>
+    </ClInclude>
+    <ClInclude Include="NANDChipItem.h">
+      <Filter>Header Files\GUIS\Items</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

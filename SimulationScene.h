@@ -9,6 +9,7 @@ class SimulationScene : public Scene
 {
 private:
 	const Mouse* mouse{ Mouse::GetMousePointer() };
+	//int maxX;
 
 public:
 	SimulationScene() = default;
@@ -34,5 +35,6 @@ private:
 
 	void AddWire(ChipOutput* output) noexcept;
 	void DropSelectedWire(Wire* selectedWire, ChipInput* chipInput) noexcept;
+	void ResetChips() noexcept;
 };
 

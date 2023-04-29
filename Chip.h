@@ -15,13 +15,16 @@ private:
 	float width;
 	float height;
 	std::wstring label;
+
+protected:
+	bool alreadyProcessed{ false };
 	std::vector<ChipInput> inputs{};
 	std::vector<ChipOutput> outputs{};
 
 public:
 	Chip(float x, float y, float width, float height, const std::wstring& label);
 	Chip(const Chip&);
-	Object* Clone() override { return new Chip(*this); }
+	Object* Clone() override;
 	~Chip();
 
 	Chip(const Chip&&) = delete;
@@ -30,8 +33,23 @@ public:
 
 	void Draw() const override;
 	Collision IsColliding(float x, float y) override;
-	void AddInput(float xOffset, float yOffset) noexcept;
-	void AddOutput(float xOffset, float yOffset) noexcept;
+	void AddInput(
+		float xOffset, float yOffset, 
+		float radius, 
+		float rOff, float gOff, float bOff,
+		float rOn, float gOn, float bOn,
+		float aOff = 1.0f, float aOn = 1.0f
+	) noexcept;
+	void AddOutput(
+		float xOffset, float yOffset,
+		float radius,
+		float rOff, float gOff, float bOff,
+		float rOn, float gOn, float bOn,
+		float aOff = 1.0f, float aOn = 1.0f
+	) noexcept;
 	void SetPosition(float x, float y) noexcept override;
+	
+	virtual void UpdateOutput() noexcept;
+	void Reset() noexcept;
 };
 

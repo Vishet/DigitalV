@@ -4,17 +4,20 @@
 #include "ToggleSwitch.h"
 #include "LayersIndexes.h"
 #include "Wire.h"
+#include "NANDChip.h"
+#include "ChipPalleteGUI.h"
 
 void SimulationScene::Load()
 {
-	Chip* NANDChip{ new Chip(150.0f, 632.5f, 200.0f, 75.0f, L"NAND") };
-	NANDChip->AddInput(-100.0f, 30.0f);
-	NANDChip->AddInput(-100.0f, -30.0f);
-	NANDChip->AddOutput(100.0f, 0.0f);
-	AddObject(LayerIndex::PALLETE, NANDChip);
+	LoadGUI(new ChipPalleteGUI());
+
+	/*
+	NANDChip* nandChip{ new NANDChip(150.0f, 632.5f, L"NAND") };
+	AddObject(LayerIndex::PALLETE, nandChip);
 
 	ToggleSwitch* toggleSwitch{ new ToggleSwitch(400.0f, 632.5f, 25.0f, 5.0f, 0.0f, 0.0f, 0.5f) };
 	AddObject(LayerIndex::PALLETE, toggleSwitch);
+	*/
 }
 
 void SimulationScene::KeyInput(const Keyboard::Event& keyEvent) noexcept
@@ -58,12 +61,13 @@ void SimulationScene::MouseInput(const Mouse::Event& mouseEvent) noexcept
 			Wire* connectedWire{ chipOutput->GetConnectedWire() };
 			if (connectedWire)
 			{
-				chipOutput->ConnectWire(nullptr);
-				DeleteObject(connectedWire);
+				connectedWire->SetInput(nullptr);
+				connectedWire->SetPosition(static_cast<float>(mouseX), static_cast<float>(mouseY));
+				MoveObjectLayer(connectedWire, LayerIndex::SELECTED_OBJECT);
 			}
-				
+			else
+				AddWire(chipOutput);
 
-			AddWire(chipOutput);
 			break;
 		}
 
@@ -98,7 +102,11 @@ void SimulationScene::MouseInput(const Mouse::Event& mouseEvent) noexcept
 			if (selectedObject)
 			{
 				if (selectedObject->GetOriginalLayerIndex() == LayerIndex::WIRES)
-					DeleteObject(selectedObject->GetLayerIndex(), 0);
+				{
+					Wire* selectedWire{ dynamic_cast<Wire*>(selectedObject) };
+					DeleteObject(selectedWire->GetLayerIndex(), 0);
+					delete selectedWire;
+				}			
 				else
 					DropSelectedObject();
 			}		
@@ -118,6 +126,7 @@ void SimulationScene::MouseInput(const Mouse::Event& mouseEvent) noexcept
 		case CollisionType::TOGGLE:
 		{
 			dynamic_cast<ToggleSwitch*>(clickCollision.trigger)->ToggleState();
+			ResetChips();
 			break;
 		}
 
@@ -178,17 +187,18 @@ void SimulationScene::DropSelectedObject() noexcept
 
 void SimulationScene::SelectCircuitObject(Object* circuitObject) noexcept
 {
-	LayerIndex objectLayerIndex{ circuitObject->GetLayerIndex() };
-	MoveObjectLayer(
-		circuitObject->GetLayerIndex(),
-		GetObjectIndex(objectLayerIndex, circuitObject),
-		LayerIndex::SELECTED_OBJECT
-	);
+	MoveObjectLayer(circuitObject, LayerIndex::SELECTED_OBJECT);
 }
 
 void SimulationScene::AddWire(ChipOutput* output) noexcept
 {
-	Wire* wire{ new Wire(output) };
+	Wire* wire{ 
+		new Wire(
+			output, 2.0f, output->GetState(), 
+			0.5f, 0.5f, 0.5f, 
+			0.0f, 0.0f, 0.5f
+		) 
+	};
 	AddObject(LayerIndex::SELECTED_OBJECT, wire);
 }
 
@@ -196,4 +206,14 @@ void SimulationScene::DropSelectedWire(Wire* selectedWire, ChipInput* chipInput)
 {
 	MoveObjectLayer(LayerIndex::SELECTED_OBJECT, 0, selectedWire->GetOriginalLayerIndex());
 	selectedWire->SetInput(chipInput);
+}
+
+void SimulationScene::ResetChips() noexcept
+{
+	auto chipsLayer{ GetLayerVector(LayerIndex::CHIPS) };
+	for(auto object : *chipsLayer)
+	{
+		Chip* chip{ dynamic_cast<Chip*>(object) };
+		chip->Reset();
+	}
 }

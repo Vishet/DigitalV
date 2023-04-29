@@ -10,7 +10,11 @@ ToggleSwitch::ToggleSwitch(
 	Object(x, y, LayerIndex::TOGGLES),
 	radius{ radius }, strokeWidth{ strokeWidth },
 	r{ r }, g{ g }, b{ b }, a{ a },
-	output{ x, y, radius + lineWidth, 0.0f }
+	output{ 
+		x, y, radius + lineWidth, 0.0f, 5.0f, 
+		0.5f, 0.5f, 0.5f,
+		0.0f, 0.0f, 0.5f
+	}
 {
 }
 
@@ -55,6 +59,7 @@ Collision ToggleSwitch::IsColliding(float x, float y)
 void ToggleSwitch::ToggleState() noexcept
 {
 	state = !state;
+	output.SetState(state);
 }
 
 void ToggleSwitch::Draw() const

@@ -6,6 +6,5 @@ enum LayerIndex {
 	CHIPS,
 	TOGGLES,
 	PALLETE,
-	GUI,
 	SELECTED_OBJECT
 };

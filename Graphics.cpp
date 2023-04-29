@@ -134,7 +134,7 @@ void Graphics::DrawCenteredText(
 
 	THROW_IF_FAILED_HR(pTextFormat->SetTextAlignment(DWRITE_TEXT_ALIGNMENT_CENTER));
 
-	IDWriteTextLayout* textLayout{};
+	CComPtr<IDWriteTextLayout> textLayout{};
 	THROW_IF_FAILED_HR(pWriteFactory->CreateTextLayout(
 		text.c_str(),
 		static_cast<UINT32>(text.length()),

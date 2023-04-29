@@ -16,7 +16,7 @@ Object::Object(const Object& object) :
 {
 }
 
-Object::Object(const Object&& object) :
+Object::Object(const Object&& object) noexcept :
 	x{ object.x },
 	y{ object.y },
 	isInLayer{ object.isInLayer },

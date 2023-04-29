@@ -41,6 +41,9 @@ public:
 	void Initialize();
 	bool HandleInput(UINT message, WPARAM wParam, LPARAM lParam) noexcept;
 
+	inline int GetWidth() const { return width; }
+	inline int GetHeight() const { return height; }
+
 private:
 	virtual LRESULT WindowProcedure(HWND windowHandle, UINT message, WPARAM wParam, LPARAM lParam) = 0;
 	static LRESULT CALLBACK WindowProcedureCanalizer(HWND windowHandle, UINT message, WPARAM wParam, LPARAM lParam) noexcept;

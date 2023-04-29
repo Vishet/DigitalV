@@ -16,7 +16,7 @@ private:
 public:
 	Object(float x, float y, LayerIndex originaLayerIndex);
 	Object(const Object& object);
-	Object(const Object&& object);
+	Object(const Object&& object) noexcept;
 	virtual Object* Clone() { return new Object(*this); }
 
 	Object operator=(const Object&) = delete;

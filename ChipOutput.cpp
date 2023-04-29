@@ -1,39 +1,61 @@
 #include "ChipOutput.h"
 #include "Graphics.h"
 
-ChipOutput::ChipOutput(float chipX, float chipY, float xOffset, float yOffset, bool state) :
+ChipOutput::ChipOutput(
+	float chipX, float chipY,
+	float xOffset, float yOffset,
+	float radius,
+	float rOff, float gOff, float bOff,
+	float rOn, float gOn, float bOn,
+	float aOff, float aOn
+) :
 	Object(chipX + xOffset, chipY + yOffset, LayerIndex::NONE),
-	state{ state },
 	xOffset{ xOffset },
-	yOffset{ yOffset }
+	yOffset{ yOffset },
+	radius{ radius },
+	rOff{ rOff }, gOff{ gOff }, bOff{ bOff },
+	rOn{ rOn }, gOn{ gOn }, bOn{ bOn },
+	aOff{ aOff }, aOn{ aOn }
 {
 }
 
 ChipOutput::ChipOutput(const ChipOutput& chipOutput) :
 	Object(chipOutput),
-	state{ chipOutput.state },
 	xOffset{ chipOutput.xOffset },
-	yOffset{ chipOutput.yOffset }
+	yOffset{ chipOutput.yOffset },
+	radius{ chipOutput.radius },
+	rOff{ chipOutput.rOff }, gOff{ chipOutput.gOff }, bOff{ chipOutput.bOff },
+	rOn{ chipOutput.rOn }, gOn{ chipOutput.gOn }, bOn{ chipOutput.bOn },
+	aOff{ chipOutput.aOff }, aOn{ chipOutput.aOn }
 {
 }
 
-ChipOutput::ChipOutput(const ChipOutput&& chipOutput) :
-	Object(std::move(chipOutput)),
-	state{ chipOutput.state },
+ChipOutput::ChipOutput(const ChipOutput&& chipOutput) noexcept :
+	Object(chipOutput),
 	xOffset{ chipOutput.xOffset },
-	yOffset{ chipOutput.yOffset }
+	yOffset{ chipOutput.yOffset },
+	radius{ chipOutput.radius },
+	rOff{ chipOutput.rOff }, gOff{ chipOutput.gOff }, bOff{ chipOutput.bOff },
+	rOn{ chipOutput.rOn }, gOn{ chipOutput.gOn }, bOn{ chipOutput.bOn },
+	aOff{ chipOutput.aOff }, aOn{ chipOutput.aOn }
 {
 }
 
 void ChipOutput::SetState(bool state) noexcept
 {
 	this->state = state;
+
+	if (connectedWire)
+		connectedWire->UpdateState();
 }
 
 void ChipOutput::Draw() const
 {
 	Graphics* graphics{ Graphics::GetGraphicsPointer() };
-	graphics->FillCircle(GetX(), GetY(), radius, r, g, b);
+	if(state)
+		graphics->FillCircle(GetX(), GetY(), radius, rOn, gOn, bOn);
+	else
+		graphics->FillCircle(GetX(), GetY(), radius, rOff, gOff, bOff);
 }
 
 void ChipOutput::SetPosition(float x, float y) noexcept

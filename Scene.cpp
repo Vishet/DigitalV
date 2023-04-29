@@ -10,6 +10,11 @@ Scene::Scene()
 
 void Scene::Unload() noexcept
 {
+	if (loadedGUI) {
+		loadedGUI->Unload();
+		delete loadedGUI;
+	}
+
 	for (auto& layer : layersArray)
 	{
 		for (auto& object : *layer)
@@ -91,6 +96,12 @@ ObjectIndex Scene::MoveObjectLayer(
 	}
 	else
 		return 0;
+}
+
+ObjectIndex Scene::MoveObjectLayer(Object* object, LayerIndex destinationLayerIndex)
+{
+	LayerIndex srcLayerIndex{ object->GetLayerIndex() };
+	return MoveObjectLayer(srcLayerIndex, GetObjectIndex(srcLayerIndex, object), destinationLayerIndex);
 }
 
 const LayerVector* Scene::GetLayerVector(LayerIndex layerIndex) const noexcept

@@ -6,6 +6,12 @@ SceneManager::~SceneManager()
 	currentScene->Unload();
 }
 
+void SceneManager::SetBorders(int maxX, int maxY)
+{
+	this->maxX = maxX;
+	this->maxY = maxY;
+}
+
 void SceneManager::LoadScene(Scene* scene) noexcept
 {
 	currentScene = scene;

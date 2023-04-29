@@ -8,6 +8,8 @@ Chip::Chip(float x, float y, float width, float height, const std::wstring& labe
 	width{ width },
 	height{ height }
 {
+	this->UpdateOutput();
+	this->Reset();
 }
 
 Chip::Chip(const Chip& chip) :
@@ -16,15 +18,24 @@ Chip::Chip(const Chip& chip) :
 	width = chip.width;
 	height = chip.height;
 	label = chip.label;
+
 	
 	for (const auto& sourceInput : chip.inputs)
 	{
-		AddInput(sourceInput.GetXOffset(), sourceInput.GetYOffset());
+		inputs.emplace_back(sourceInput);
+		inputs.back().SetParentChip(this);
 	}
 	for (const auto& sourceOutput : chip.outputs)
 	{
-		AddInput(sourceOutput.GetXOffset(), sourceOutput.GetYOffset());
+		outputs.emplace_back(sourceOutput);
 	}
+}
+
+Object* Chip::Clone()
+{
+	auto chipClone{ new Chip(*this) };
+	chipClone->UpdateOutput();
+	return chipClone;
 }
 
 Chip::~Chip()
@@ -42,7 +53,7 @@ void Chip::Draw() const
 	);
 
 	graphics->DrawCenteredText(
-		label.c_str(),
+		label,
 		GetX() - width / 2, GetY() - height / 2,
 		GetX() + width / 2, GetY() + height / 2,
 		0.0f, 0.0f, 1.0f
@@ -89,14 +100,41 @@ Collision Chip::IsColliding(float x, float y)
 	return collision;
 }
 
-void Chip::AddInput(float xOffset, float yOffset) noexcept
+void Chip::AddInput(
+	float xOffset, float yOffset,
+	float radius,
+	float rOff, float gOff, float bOff,
+	float rOn, float gOn, float bOn,
+	float aOff, float aOn
+) noexcept
 {
-	inputs.emplace_back(ChipInput(GetX(), GetY(), xOffset, yOffset));
+	inputs.emplace_back(
+		ChipInput(
+			this,
+			GetX(), GetY(), xOffset, yOffset, radius,
+			rOff, gOff, bOff,
+			rOn, gOn, bOn,
+			aOff, aOn
+		)
+	);
 }
 
-void Chip::AddOutput(float xOffset, float yOffset) noexcept
+void Chip::AddOutput(
+	float xOffset, float yOffset,
+	float radius,
+	float rOff, float gOff, float bOff,
+	float rOn, float gOn, float bOn,
+	float aOff, float aOn
+) noexcept
 {
-	outputs.emplace_back(ChipOutput(GetX(), GetY(), xOffset, yOffset));
+	outputs.emplace_back(
+		ChipOutput(
+			GetX(), GetY(), xOffset, yOffset, radius,
+			rOff, gOff, bOff,
+			rOn, gOn, bOn,
+			aOff, aOn
+		)
+	);
 }
 
 void Chip::SetPosition(float x, float y) noexcept
@@ -105,6 +143,20 @@ void Chip::SetPosition(float x, float y) noexcept
 
 	for (auto& input : inputs)
 		input.SetPosition(x, y);
-	for (auto output : outputs)
+
+	for (auto& output : outputs)
 		output.SetPosition(x, y);
+}
+
+void Chip::UpdateOutput() noexcept
+{
+	if (!alreadyProcessed)
+	{
+		alreadyProcessed = true;
+	}
+}
+
+void Chip::Reset() noexcept
+{
+	alreadyProcessed = false;
 }
