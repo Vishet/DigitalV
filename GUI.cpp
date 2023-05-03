@@ -1,7 +1,6 @@
 #include "GUI.h"
 
-GUI::GUI() :
-	maxX
+GUI::GUI()
 {
 
 }
@@ -24,6 +23,22 @@ void GUI::Unload()
 	for (auto item : itemsVector)
 	{
 		delete item;
+	}
+}
+
+void GUI::OnKeyInput(const Keyboard::Event& keyEvent) noexcept
+{
+	for (auto item : itemsVector)
+	{
+		item->KeyInput(keyEvent);
+	}
+}
+
+void GUI::OnMouseInput(const Mouse::Event& mouseEvent) noexcept
+{
+	for (auto item : itemsVector)
+	{
+		item->MouseInput(mouseEvent);
 	}
 }
 

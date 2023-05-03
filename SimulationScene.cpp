@@ -10,14 +10,6 @@
 void SimulationScene::Load()
 {
 	LoadGUI(new ChipPalleteGUI());
-
-	/*
-	NANDChip* nandChip{ new NANDChip(150.0f, 632.5f, L"NAND") };
-	AddObject(LayerIndex::PALLETE, nandChip);
-
-	ToggleSwitch* toggleSwitch{ new ToggleSwitch(400.0f, 632.5f, 25.0f, 5.0f, 0.0f, 0.0f, 0.5f) };
-	AddObject(LayerIndex::PALLETE, toggleSwitch);
-	*/
 }
 
 void SimulationScene::KeyInput(const Keyboard::Event& keyEvent) noexcept
@@ -40,13 +32,6 @@ void SimulationScene::MouseInput(const Mouse::Event& mouseEvent) noexcept
 		Collision clickCollision{ GetCollidedObject(mouseX, mouseY) };
 		switch (clickCollision.type)
 		{
-
-		case CollisionType::PALLETE:
-		{
-			SelectPalleteObject(clickCollision.trigger);
-			break;
-		}
-
 		case CollisionType::TOGGLE:
 		case CollisionType::CHIP:
 		{
@@ -155,11 +140,6 @@ Object* SimulationScene::GetSelectedObject() const noexcept
 	}
 
 	return nullptr;
-}
-
-void SimulationScene::SelectPalleteObject(Object* palleteObject) noexcept
-{
-	AddObject(SELECTED_OBJECT, palleteObject->Clone());
 }
 
 void SimulationScene::DragSelectedObject() noexcept

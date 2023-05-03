@@ -1,25 +1,26 @@
 #include "GUIItem.h"
 
-GUIItem::GUIItem(int x, int y, int maxX, int maxY) :
+GUIItem::GUIItem(int x, int y) :
 	x{ x },
-	y{ y },
-	maxX{ maxX },
-	maxY{ maxY }
+	y{ y }
 {
 }
 
-int GUIItem::GetX() noexcept
+int GUIItem::GetX() const noexcept
 {
-	if (x < 0)
-		return (maxX + x);
-	else
-		return x;
+	return x;
 }
 
-int GUIItem::GetY() noexcept
+int GUIItem::GetY() const noexcept
 {
-	if (y < 0)
-		return (maxY + y);
-	else
-		return y;
+	return y;
+}
+
+void GUIItem::KeyInput(const Keyboard::Event& keyEvent) noexcept
+{
+
+}
+
+void GUIItem::MouseInput(const Mouse::Event& mouseEvent) noexcept
+{
 }

@@ -9,7 +9,6 @@ App::App()
 
 	mainWindow.Show();
 
-	sceneManager.SetBorders(mainWindow.GetWidth(), mainWindow.GetHeight());
 	sceneManager.LoadScene(new SimulationScene());
 }
 

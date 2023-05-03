@@ -63,6 +63,12 @@
     <Filter Include="Source Files\GUIS\Items">
       <UniqueIdentifier>{9764dd67-00f0-4924-877b-779ea99e72ea}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\GUIS\Items\Pickups">
+      <UniqueIdentifier>{b7f0037b-1b39-484d-abd8-84cd88a7b5d5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\GUIS\Items\Pickups">
+      <UniqueIdentifier>{1a2a79f9-adb9-407d-934f-c9aa9c8413f4}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Mouse.cpp">
@@ -119,17 +125,23 @@
     <ClCompile Include="GUI.cpp">
       <Filter>Source Files\Engine\Source</Filter>
     </ClCompile>
-    <ClCompile Include="SceneManager.cpp">
-      <Filter>Source Files\Objects</Filter>
-    </ClCompile>
     <ClCompile Include="GUIItem.cpp">
       <Filter>Source Files\Engine\Source</Filter>
     </ClCompile>
     <ClCompile Include="ChipPalleteGUI.cpp">
       <Filter>Source Files\GUIS</Filter>
     </ClCompile>
-    <ClCompile Include="NANDChipItem.cpp">
+    <ClCompile Include="SceneManager.cpp">
+      <Filter>Source Files\Engine\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="PickupItem.cpp">
       <Filter>Source Files\GUIS\Items</Filter>
+    </ClCompile>
+    <ClCompile Include="NANDChipItem.cpp">
+      <Filter>Source Files\GUIS\Items\Pickups</Filter>
+    </ClCompile>
+    <ClCompile Include="ToggleSwitchItem.cpp">
+      <Filter>Source Files\GUIS\Items\Pickups</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -202,8 +214,14 @@
     <ClInclude Include="ChipPalleteGUI.h">
       <Filter>Header Files\GUIS</Filter>
     </ClInclude>
-    <ClInclude Include="NANDChipItem.h">
+    <ClInclude Include="PickupItem.h">
       <Filter>Header Files\GUIS\Items</Filter>
+    </ClInclude>
+    <ClInclude Include="NANDChipItem.h">
+      <Filter>Header Files\GUIS\Items\Pickups</Filter>
+    </ClInclude>
+    <ClInclude Include="ToggleSwitchItem.h">
+      <Filter>Header Files\GUIS\Items\Pickups</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

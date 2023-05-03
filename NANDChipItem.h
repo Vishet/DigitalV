@@ -1,8 +1,9 @@
 #pragma once
-#include "GUIItem.h"
+
+#include "PickupItem.h"
 #include <string>
 
-class NANDChipItem : public GUIItem
+class NANDChipItem : public PickupItem
 {
 private:
 	static constexpr int width{ 200 };
@@ -26,7 +27,7 @@ private:
 	static constexpr int outputYOffset{ 0 };
 
 public:
-	NANDChipItem(int x, int y, int maxX, int maxY);
+	NANDChipItem(int x, int y);
 
 	NANDChipItem(const NANDChipItem& object) = delete;
 	NANDChipItem(const NANDChipItem&& object) = delete;
@@ -34,5 +35,12 @@ public:
 	NANDChipItem operator=(const NANDChipItem&&) = delete;
 
 	void Draw() override;
+
+	void KeyInput(const Keyboard::Event& keyEvent) noexcept override;
+	void MouseInput(const Mouse::Event& mouseEvent) noexcept override;
+
+private:
+	bool IsColliding(int x, int y) const noexcept;
+	void DrawChip(int x, int y);
 };
 

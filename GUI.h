@@ -7,7 +7,6 @@ class GUI
 {
 private:
 	std::vector<GUIItem*> itemsVector{};
-	int maxX, maxY;
 
 public:
 	GUI();
@@ -18,5 +17,8 @@ public:
 	virtual void OnClick(){};
 	virtual void Load() = 0;
 	virtual void Unload();
+
+	void OnKeyInput(const Keyboard::Event& keyEvent) noexcept;
+	void OnMouseInput(const Mouse::Event& mouseEvent) noexcept;
 };
 

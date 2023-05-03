@@ -7,8 +7,7 @@
 class SceneManager
 {
 private:
-	Scene* currentScene{};
-	int maxX, maxY;
+	static Scene* currentScene;
 
 public:
 	SceneManager() = default;
@@ -19,11 +18,12 @@ public:
 	SceneManager operator=(const SceneManager&) = delete;
 	SceneManager operator=(const SceneManager&&) = delete;
 
-	void SetBorders(int maxX, int maxY);
 	void LoadScene(Scene* scene) noexcept;
 	void KeyInput(const Keyboard::Event& keyEvent) noexcept;
 	void MouseInput(const Mouse::Event& mouseEvent) noexcept;
 	void UpdateScene() noexcept;
 	void RenderScene() const;
+
+	static Scene* GetCurrentScene() noexcept;
 };
 

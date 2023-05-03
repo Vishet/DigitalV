@@ -3,17 +3,13 @@
 #include "LayersIndexes.h"
 
 ToggleSwitch::ToggleSwitch(
-	float x, float y,
-	float radius, float strokeWidth,
-	float r, float g, float b, float a
+	float x, float y
 ) :
 	Object(x, y, LayerIndex::TOGGLES),
-	radius{ radius }, strokeWidth{ strokeWidth },
-	r{ r }, g{ g }, b{ b }, a{ a },
 	output{ 
-		x, y, radius + lineWidth, 0.0f, 5.0f, 
-		0.5f, 0.5f, 0.5f,
-		0.0f, 0.0f, 0.5f
+		x, y, radius + lineWidth, 0.0f, outputRadius, 
+		outputR, outputG, outputB,
+		activeOutputR, activeOutputG, activeOutputB
 	}
 {
 }

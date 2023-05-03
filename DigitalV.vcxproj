@@ -148,10 +148,12 @@
     <ClCompile Include="NANDChip.cpp" />
     <ClCompile Include="NANDChipItem.cpp" />
     <ClCompile Include="Object.cpp" />
+    <ClCompile Include="PickupItem.cpp" />
     <ClCompile Include="Scene.cpp" />
     <ClCompile Include="SceneManager.cpp" />
     <ClCompile Include="SimulationScene.cpp" />
     <ClCompile Include="ToggleSwitch.cpp" />
+    <ClCompile Include="ToggleSwitchItem.cpp" />
     <ClCompile Include="Wire.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -174,10 +176,12 @@
     <ClInclude Include="NANDChip.h" />
     <ClInclude Include="NANDChipItem.h" />
     <ClInclude Include="Object.h" />
+    <ClInclude Include="PickupItem.h" />
     <ClInclude Include="Scene.h" />
     <ClInclude Include="SceneManager.h" />
     <ClInclude Include="SimulationScene.h" />
     <ClInclude Include="ToggleSwitch.h" />
+    <ClInclude Include="ToggleSwitchItem.h" />
     <ClInclude Include="Wire.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

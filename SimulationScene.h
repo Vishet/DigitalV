@@ -9,7 +9,6 @@ class SimulationScene : public Scene
 {
 private:
 	const Mouse* mouse{ Mouse::GetMousePointer() };
-	//int maxX;
 
 public:
 	SimulationScene() = default;
@@ -27,7 +26,6 @@ public:
 private:
 	Object* GetSelectedObject() const noexcept;
 
-	void SelectPalleteObject(Object* palleteObject) noexcept;
 	void DragSelectedObject() noexcept;
 	void DropSelectedObject() noexcept;
 

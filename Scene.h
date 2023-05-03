@@ -33,11 +33,15 @@ public:
 	Scene operator=(const Scene&&) = delete;
 
 	virtual void Load() = 0;
-	inline void LoadGUI(GUI* loadedGUI) { this->loadedGUI = loadedGUI; }
+	void LoadGUI(GUI* loadedGUI);
 
 	virtual void Unload() noexcept;
+
 	virtual void KeyInput(const Keyboard::Event& keyEvent) = 0;
 	virtual void MouseInput(const Mouse::Event& mouseEvent) = 0;
+	void OnKeyInput(const Keyboard::Event& keyEvent) noexcept;
+	void OnMouseInput(const Mouse::Event& mouseEvent) noexcept;
+
 	virtual void Update() = 0;
 	virtual void Render();
 

@@ -1,6 +1,7 @@
 #include "ChipPalleteGUI.h"
 
 #include "NANDChipItem.h"
+#include "ToggleSwitchItem.h"
 
 ChipPalleteGUI::ChipPalleteGUI() :
 	GUI()
@@ -9,5 +10,6 @@ ChipPalleteGUI::ChipPalleteGUI() :
 
 void ChipPalleteGUI::Load()
 {
-	AddItem(new NANDChipItem())
+	AddItem(new NANDChipItem(150, 633));
+	AddItem(new ToggleSwitchItem(400, 633));
 }

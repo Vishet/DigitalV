@@ -8,6 +8,12 @@ Scene::Scene()
 	}
 }
 
+void Scene::LoadGUI(GUI* loadedGUI)
+{
+	loadedGUI->Load();
+	this->loadedGUI = loadedGUI;
+}
+
 void Scene::Unload() noexcept
 {
 	if (loadedGUI) {
@@ -24,6 +30,20 @@ void Scene::Unload() noexcept
 	}
 }
 
+void Scene::OnKeyInput(const Keyboard::Event& keyEvent) noexcept
+{
+	if(loadedGUI)
+		loadedGUI->OnKeyInput(keyEvent);
+	KeyInput(keyEvent);
+}
+
+void Scene::OnMouseInput(const Mouse::Event& mouseEvent) noexcept
+{
+	if (loadedGUI)
+		loadedGUI->OnMouseInput(mouseEvent);
+	MouseInput(mouseEvent);
+}
+
 void Scene::Render()
 {
 	for (auto& layer : layersArray)
@@ -33,6 +53,8 @@ void Scene::Render()
 			object->Draw();
 		}
 	}
+
+	loadedGUI->Render();
 }
 
 ObjectIndex Scene::AddObject(LayerIndex layerIndex, Object* object) noexcept

@@ -1,15 +1,11 @@
 #include "SceneManager.h"
 #include "Graphics.h"
 
+Scene* SceneManager::currentScene{};
+
 SceneManager::~SceneManager()
 {
 	currentScene->Unload();
-}
-
-void SceneManager::SetBorders(int maxX, int maxY)
-{
-	this->maxX = maxX;
-	this->maxY = maxY;
 }
 
 void SceneManager::LoadScene(Scene* scene) noexcept
@@ -20,12 +16,12 @@ void SceneManager::LoadScene(Scene* scene) noexcept
 
 void SceneManager::KeyInput(const Keyboard::Event& keyEvent) noexcept
 {
-	currentScene->KeyInput(keyEvent);
+	currentScene->OnKeyInput(keyEvent);
 }
 
 void SceneManager::MouseInput(const Mouse::Event& mouseEvent) noexcept
 {
-	currentScene->MouseInput(mouseEvent);
+	currentScene->OnMouseInput(mouseEvent);
 }
 
 void SceneManager::UpdateScene() noexcept
@@ -39,4 +35,10 @@ void SceneManager::RenderScene() const
 	graphics->BeginDraw(0.0f, 0.0f, 0.0f);
 	currentScene->Render();
 	graphics->EndDraw();
+}
+
+Scene* SceneManager::GetCurrentScene() noexcept
+{
+	if (currentScene)
+		return currentScene;
 }

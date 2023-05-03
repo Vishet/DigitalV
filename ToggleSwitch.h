@@ -7,21 +7,28 @@ class ToggleSwitch : public Object
 {
 private:
 	bool state{};
-	float radius;
-	float strokeWidth;
-	float r;
-	float g;
-	float b;
-	float a;
-	static constexpr float lineWidth{ 25.0f };
+	float radius{ 25.0f };
+	float strokeWidth{ 5.0f };
+	float r{ 0.0f };
+	float g{ 0.0f };
+	float b{ 0.5f };
+	float a{ 1.0f };
+
+	float outputR{ 0.5f };
+	float outputG{ 0.5f };
+	float outputB{ 0.5f };
+
+	float activeOutputR{ 0.0f };
+	float activeOutputG{ 0.0f };
+	float activeOutputB{ 0.5f };
+
+	float outputRadius{ 5.0f };
+
+	float lineWidth{ 25.0f };
 	ChipOutput output;
 
 public:
-	ToggleSwitch(
-		float x, float y, 
-		float radius, float strokeWidth, 
-		float r, float g, float b, float a = 1.0f
-	);
+	ToggleSwitch(float x, float y);
 	ToggleSwitch(const ToggleSwitch& toggleSwitch);
 
 	Object* Clone() override { return new ToggleSwitch(*this); }
